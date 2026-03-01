@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏹 Arciere Leggendario — IRC Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --gold-dark: #8b6914;
+    --crimson: #8b1a1a;
+    --crimson-light: #c0392b;
+    --bg-dark: #0a0704;
+    --bg-mid: #120d06;
+    --bg-card: #1a1108;
+    --parchment: #f5e6c8;
+    --parchment-dark: #d4b896;
+    --text: #e8d5a3;
+    --text-dim: #9a8060;
+    --glow: rgba(201, 168, 76, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: 'Crimson Text', serif;
+    font-size: 18px;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cline x1='10' y1='0' x2='10' y2='20' stroke='%23c9a84c' stroke-width='1.5'/%3E%3Cline x1='0' y1='10' x2='20' y2='10' stroke='%23c9a84c' stroke-width='1.5'/%3E%3Ccircle cx='10' cy='10' r='2' fill='%23c9a84c'/%3E%3C/svg%3E") 10 10, crosshair;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* ── PARTICLES ── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0;
+  }
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139,26,26,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 80%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      linear-gradient(180deg, #0a0704 0%, #120d06 50%, #0a0704 100%);
+  }
+
+  .hero-target {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.04;
+    pointer-events: none;
+  }
+  .hero-target circle { fill: none; stroke: var(--gold); }
+
+  .hero-bow {
+    font-size: 5rem;
+    animation: bowPulse 3s ease-in-out infinite;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 30px var(--gold));
+  }
+  @keyframes bowPulse {
+    0%, 100% { transform: scale(1) rotate(-5deg); filter: drop-shadow(0 0 20px var(--gold)); }
+    50% { transform: scale(1.05) rotate(0deg); filter: drop-shadow(0 0 50px var(--gold-light)); }
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: var(--gold-light);
+    text-shadow:
+      0 0 30px var(--glow),
+      0 0 60px rgba(201,168,76,0.2),
+      2px 2px 0 var(--gold-dark);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    animation: titleReveal 1.2s ease-out both;
+  }
+  @keyframes titleReveal {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    color: var(--parchment-dark);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin: 1rem 0 2rem;
+    animation: titleReveal 1.2s 0.3s ease-out both;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    animation: titleReveal 1.2s 0.5s ease-out both;
+  }
+  .hero-divider::before,
+  .hero-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    max-width: 200px;
+  }
+  .hero-divider span {
+    color: var(--gold);
+    font-size: 1.5rem;
+  }
+
+  .hero-desc {
+    max-width: 600px;
+    color: var(--parchment-dark);
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.8;
+    animation: titleReveal 1.2s 0.7s ease-out both;
+  }
+
+  .hero-nav {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2.5rem;
+    animation: titleReveal 1.2s 0.9s ease-out both;
+  }
+
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+  .btn:hover { color: var(--bg-dark); }
+  .btn:hover::before { transform: translateX(0); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--crimson), var(--crimson-light));
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+  .btn-primary::before { background: var(--gold-light); }
+  .btn-primary:hover { color: var(--bg-dark); }
+
+  .scroll-arrow {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold);
+    font-size: 1.5rem;
+    animation: bounce 2s ease-in-out infinite;
+    opacity: 0.6;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,7,4,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .nav-brand {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1rem;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover {
+    color: var(--gold-light);
+    border-color: rgba(201,168,76,0.3);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative;
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--crimson-light);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--gold-light);
+    text-shadow: 0 0 20px var(--glow);
+  }
+  .section-line {
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1rem auto 0;
+  }
+
+  /* ── SEPARATOR ── */
+  .sep {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--gold);
+    opacity: 0.3;
+    padding: 1rem;
+  }
+
+  /* ── COMANDI ── */
+  .commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cmd-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  .cmd-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+  }
+  .cmd-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    background: rgba(26,17,8,0.9);
+    box-shadow: 0 0 30px rgba(201,168,76,0.05);
+  }
+  .cmd-card:hover::before { transform: scaleY(1); }
+
+  .cmd-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .cmd-syntax {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: var(--crimson-light);
+    background: rgba(139,26,26,0.15);
+    padding: 0.3rem 0.6rem;
+    border-left: 2px solid var(--crimson);
+    margin-bottom: 0.8rem;
+    word-break: break-all;
+  }
+  .cmd-desc {
+    color: var(--parchment-dark);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* ── BERSAGLIO ── */
+  .target-section {
+    background: linear-gradient(180deg, transparent, rgba(139,26,26,0.05), transparent);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .target-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .target-svg-wrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    flex-shrink: 0;
+  }
+  .target-svg-wrap svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.3));
+    animation: targetSpin 30s linear infinite;
+  }
+  @keyframes targetSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .target-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .target-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: all 0.2s;
+  }
+  .target-row:hover {
+    border-color: rgba(201,168,76,0.3);
+    transform: translateX(5px);
+  }
+  .target-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .target-pts {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    color: var(--gold-light);
+    min-width: 60px;
+  }
+  .target-name { color: var(--parchment-dark); font-size: 0.95rem; }
+
+  /* ── OGGETTI ── */
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem;
+  }
+  .item-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 1.2rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .item-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .item-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201,168,76,0.35);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+  .item-card:hover::after { opacity: 1; }
+  .item-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .item-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 0.4rem;
+  }
+  .item-effect { color: var(--parchment-dark); font-size: 0.9rem; line-height: 1.5; }
+  .item-rarity {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    display: inline-block;
+  }
+  .rarity-comune { color: #aaa; border: 1px solid #555; }
+  .rarity-non-comune { color: #5b9bd5; border: 1px solid #2980b9; }
+  .rarity-raro { color: #a855f7; border: 1px solid #7c3aed; }
+  .rarity-epico { color: var(--gold); border: 1px solid var(--gold-dark); }
+  .rarity-leggendario { color: var(--crimson-light); border: 1px solid var(--crimson); }
+
+  /* ── TITOLI ── */
+  .titles-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.8rem;
+  }
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1.2rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: all 0.2s;
+  }
+  .title-row:hover {
+    border-color: rgba(201,168,76,0.3);
+    background: rgba(26,17,8,0.95);
+  }
+  .title-exp {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    min-width: 80px;
+    text-align: right;
+  }
+  .title-name { color: var(--text); font-size: 1rem; }
+
+  /* ── CLASSIFICA ── */
+  .classifica-section {
+    background: linear-gradient(180deg, transparent, rgba(201,168,76,0.03), transparent);
+  }
+
+  .month-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .month-tab {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 1.2rem;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .month-tab:hover, .month-tab.active {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .leaderboard {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .leaderboard.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .lb-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.1rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .lb-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.08);
+    margin-bottom: 0.6rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .lb-row:hover {
+    border-color: rgba(201,168,76,0.25);
+    transform: translateX(4px);
+  }
+  .lb-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 3px;
+    height: 100%;
+  }
+  .lb-row.pos-1::before { background: #FFD700; }
+  .lb-row.pos-2::before { background: #C0C0C0; }
+  .lb-row.pos-3::before { background: #CD7F32; }
+  .lb-row.pos-other::before { background: var(--text-dim); }
+
+  .lb-pos {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.4rem;
+    min-width: 40px;
+    text-align: center;
+  }
+  .lb-row.pos-1 .lb-pos { color: #FFD700; filter: drop-shadow(0 0 8px gold); }
+  .lb-row.pos-2 .lb-pos { color: #C0C0C0; }
+  .lb-row.pos-3 .lb-pos { color: #CD7F32; }
+  .lb-row.pos-other .lb-pos { color: var(--text-dim); font-size: 1rem; }
+
+  .lb-info { flex: 1; }
+  .lb-nick {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+  .lb-title-text {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .lb-pts {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.1rem;
+    color: var(--gold);
+    text-align: right;
+  }
+  .lb-pts span {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: normal;
+  }
+
+  .lb-empty {
+    text-align: center;
+    color: var(--text-dim);
+    font-style: italic;
+    padding: 3rem;
+    border: 1px dashed rgba(201,168,76,0.2);
+  }
+
+  /* ── HOF ── */
+  .hof-section {
+    background: linear-gradient(180deg, transparent, rgba(139,26,26,0.05), transparent);
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .hof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 700px) { .hof-grid { grid-template-columns: 1fr; } }
+
+  .hof-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .hof-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    border-color: rgba(201,168,76,0.4);
+  }
+  .hof-medal { font-size: 3rem; margin-bottom: 0.5rem; }
+  .hof-nick {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.3rem;
+  }
+  .hof-pts {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .hof-title-text {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 0.3rem;
+  }
+  .hof-month {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--crimson-light);
+    margin-top: 1rem;
+  }
+
+  /* ── REGOLE ── */
+  .rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    counter-reset: rule;
+  }
+  .rule-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.2rem 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: all 0.2s;
+  }
+  .rule-item:hover {
+    border-color: rgba(201,168,76,0.3);
+    transform: translateX(5px);
+  }
+  .rule-num {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.5rem;
+    color: var(--gold);
+    opacity: 0.5;
+    flex-shrink: 0;
+    min-width: 40px;
+  }
+  .rule-text { color: var(--parchment-dark); line-height: 1.7; }
+  .rule-text strong { color: var(--gold-light); font-style: normal; }
+
+  /* ── SERVER INFO ── */
+  .server-box {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .server-box::before {
+    content: '🏹';
+    position: absolute;
+    font-size: 8rem;
+    opacity: 0.03;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .server-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+  .server-value {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px var(--glow);
+  }
+  .server-copy {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    color: var(--crimson-light);
+    background: rgba(139,26,26,0.15);
+    padding: 0.8rem 1.5rem;
+    border: 1px solid rgba(139,26,26,0.3);
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 0;
+  }
+  .server-copy:hover {
+    background: rgba(139,26,26,0.3);
+    color: var(--gold-light);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  footer strong { color: var(--gold); font-style: normal; }
+
+  /* ── FULL WIDTH WRAPPER ── */
+  .full-section {
+    width: 100%;
+    background: inherit;
+  }
+  .full-section > section { /* inherits max-width */ }
+
+  /* ── TOOLTIP ── */
+  .tooltip {
+    position: relative;
+  }
+  .tooltip::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-card);
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-family: 'Cinzel', serif;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 10;
+  }
+  .tooltip:hover::after { opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .commands-grid { grid-template-columns: 1fr; }
+    .items-grid { grid-template-columns: 1fr 1fr; }
+    nav { padding: 0.6rem 1rem; }
+    section { padding: 3rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- HERO -->
+<div class="hero" id="home">
+  <!-- Bersaglio decorativo -->
+  <svg class="hero-target" viewBox="0 0 500 500">
+    <circle cx="250" cy="250" r="240" stroke-width="1"/>
+    <circle cx="250" cy="250" r="190" stroke-width="1"/>
+    <circle cx="250" cy="250" r="140" stroke-width="1"/>
+    <circle cx="250" cy="250" r="90" stroke-width="1"/>
+    <circle cx="250" cy="250" r="40" stroke-width="1"/>
+    <line x1="10" y1="250" x2="490" y2="250" stroke="rgba(201,168,76,0.5)" stroke-width="0.5"/>
+    <line x1="250" y1="10" x2="250" y2="490" stroke="rgba(201,168,76,0.5)" stroke-width="0.5"/>
+  </svg>
+
+  <div class="hero-bow">🏹</div>
+  <h1>Arciere<br>Leggendario</h1>
+  <p class="hero-subtitle">IRC Game • Canale #Amore</p>
+
+  <div class="hero-divider">
+    <span>⚜</span>
+  </div>
+
+  <p class="hero-desc">
+    Scocca frecce, accumula punti, sfida gli altri arcieri e scala la classifica.<br>
+    Il gioco epico di abilità e fortuna su IRC.
+  </p>
+
+  <div class="hero-nav">
+    <a href="#comandi" class="btn btn-primary">📋 Comandi</a>
+    <a href="#classifica" class="btn">🏆 Classifica</a>
+    <a href="#oggetti" class="btn">🎒 Oggetti</a>
+    <a href="#regole" class="btn">📖 Regole</a>
+  </div>
+
+  <div class="scroll-arrow">⬇</div>
+</div>
+
+<!-- NAV STICKY -->
+<nav>
+  <a href="#home" class="nav-brand">🏹 Arciere Leggendario</a>
+  <div class="nav-links">
+    <a href="#comandi">Comandi</a>
+    <a href="#bersaglio">Bersaglio</a>
+    <a href="#oggetti">Oggetti</a>
+    <a href="#titoli">Titoli</a>
+    <a href="#classifica">Classifica</a>
+    <a href="#regole">Regole</a>
+    <a href="#server">Server</a>
+  </div>
+</nav>
+
+<!-- COMANDI -->
+<div class="full-section" id="comandi">
+<section>
+  <div class="section-header">
+    <p class="section-label">Guida Rapida</p>
+    <h2 class="section-title">⚔️ Comandi</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="commands-grid">
+    <div class="cmd-card">
+      <div class="cmd-name">🏹 Freccia</div>
+      <div class="cmd-syntax">!freccia</div>
+      <div class="cmd-desc">Scocca una freccia verso il bersaglio. Cooldown di <strong>5 minuti</strong> tra un tiro e l'altro. Ogni tiro può far cadere un oggetto (25% di probabilità).</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🎒 Usa Oggetto</div>
+      <div class="cmd-syntax">!usa [oggetto]</div>
+      <div class="cmd-desc">Attiva un oggetto dall'inventario prima del prossimo tiro. Senza argomento mostra gli effetti attualmente attivi.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">📦 Inventario</div>
+      <div class="cmd-syntax">!inventario [nick]</div>
+      <div class="cmd-desc">Mostra gli oggetti in tuo possesso (o di un altro giocatore). La risposta arriva in <em>notice privato</em>.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">📊 Profilo</div>
+      <div class="cmd-syntax">!profilo [nick]</div>
+      <div class="cmd-desc">Statistiche complete: punti, EXP, titolo, tiri, sfide vinte/perse, streak giornaliera e cooldown. In <em>notice privato</em>.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🏆 Classifica</div>
+      <div class="cmd-syntax">!top</div>
+      <div class="cmd-desc">Mostra i top 8 arcieri per <strong>punti</strong>. In caso di pari punti, i giocatori compaiono sulla stessa riga.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🌟 Classifica EXP</div>
+      <div class="cmd-syntax">!top exp</div>
+      <div class="cmd-desc">Mostra i top 8 arcieri per <strong>EXP</strong> — l'esperienza accumulata che determina il titolo.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🎯 La Mia Posizione</div>
+      <div class="cmd-syntax">!rank</div>
+      <div class="cmd-desc">Mostra la tua posizione esatta in classifica, il titolo attuale e la streak giornaliera. In <em>notice privato</em>.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">⚔️ Sfida</div>
+      <div class="cmd-syntax">!sfida &lt;nick&gt; [punti]</div>
+      <div class="cmd-desc">Lancia una sfida PvP. La posta si calcola automaticamente (~20% dei tuoi punti, max 50) oppure puoi specificarla (min 5, max 200). Scade in 2 minuti. Cooldown 15 min.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">✅ Accetta Sfida</div>
+      <div class="cmd-syntax">!accetta</div>
+      <div class="cmd-desc">Accetta una sfida ricevuta. Entrambi i giocatori tirano e chi colpisce più in alto vince la posta in punti ed EXP.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🚫 Rifiuta Sfida</div>
+      <div class="cmd-syntax">!rifiuta</div>
+      <div class="cmd-desc">Rifiuta una sfida ricevuta. Nessun punto viene scambiato.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🏛️ Hall of Fame</div>
+      <div class="cmd-syntax">!hof</div>
+      <div class="cmd-desc">Mostra la Hall of Fame storica con i top 3 di ogni mese precedente.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">📈 Statistiche</div>
+      <div class="cmd-syntax">!statistiche</div>
+      <div class="cmd-desc">Dati globali del gioco: tiri totali, punti distribuiti, sfide disputate, oggetti in circolazione.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">📖 Guida</div>
+      <div class="cmd-syntax">!guida</div>
+      <div class="cmd-desc">Riceve la guida completa del gioco in <em>notice privato</em>, con tutti i dettagli su meccaniche e oggetti.</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep">🏹 · · · · · 🎯 · · · · · 🏹</div>
+
+<!-- BERSAGLIO -->
+<div class="full-section target-section" id="bersaglio">
+<section>
+  <div class="section-header">
+    <p class="section-label">Meccanica di Gioco</p>
+    <h2 class="section-title">🎯 Il Bersaglio</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="target-visual">
+    <div class="target-svg-wrap">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="110" cy="110" r="105" fill="#fff"/>
+        <circle cx="110" cy="110" r="84" fill="#000"/>
+        <circle cx="110" cy="110" r="63" fill="#006EB7"/>
+        <circle cx="110" cy="110" r="42" fill="#E8242A"/>
+        <circle cx="110" cy="110" r="21" fill="#FFD700"/>
+        <circle cx="110" cy="110" r="10" fill="#FFD700" stroke="#e0b800" stroke-width="1"/>
+        <line x1="5" y1="110" x2="215" y2="110" stroke="rgba(0,0,0,0.15)" stroke-width="0.8"/>
+        <line x1="110" y1="5" x2="110" y2="215" stroke="rgba(0,0,0,0.15)" stroke-width="0.8"/>
+      </svg>
+    </div>
+
+    <div class="target-legend">
+      <div class="target-row">
+        <div class="target-dot" style="background:#FFD700;box-shadow:0 0 8px gold"></div>
+        <span class="target-pts">10 pts</span>
+        <span class="target-name">🎯💛 Centro Giallo (X)</span>
+      </div>
+      <div class="target-row">
+        <div class="target-dot" style="background:#FFD700"></div>
+        <span class="target-pts">9 pts</span>
+        <span class="target-name">💛 Anello Giallo</span>
+      </div>
+      <div class="target-row">
+        <div class="target-dot" style="background:#E8242A"></div>
+        <span class="target-pts">7–8 pts</span>
+        <span class="target-name">❤️ Anello Rosso</span>
+      </div>
+      <div class="target-row">
+        <div class="target-dot" style="background:#006EB7"></div>
+        <span class="target-pts">5–6 pts</span>
+        <span class="target-name">💙 Anello Blu</span>
+      </div>
+      <div class="target-row">
+        <div class="target-dot" style="background:#222"></div>
+        <span class="target-pts">3–4 pts</span>
+        <span class="target-name">🖤 Anello Nero</span>
+      </div>
+      <div class="target-row">
+        <div class="target-dot" style="background:#eee;border:1px solid #999"></div>
+        <span class="target-pts">1–2 pts</span>
+        <span class="target-name">🤍 Anello Bianco</span>
+      </div>
+      <div class="target-row">
+        <div class="target-dot" style="background:transparent;border:2px solid #555"></div>
+        <span class="target-pts">0 pts</span>
+        <span class="target-name">❌ Fuori Bersaglio</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:2rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;">
+    <div class="cmd-card">
+      <div class="cmd-name">🎁 Bonus ogni 5 tiri</div>
+      <div class="cmd-desc">Ogni 5 tiri ottieni un moltiplicatore <strong>×2</strong> sui punti di quel tiro.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">💥 Super Bonus ogni 20 tiri</div>
+      <div class="cmd-desc">Ogni 20 tiri ottieni un moltiplicatore <strong>×5</strong> — i bonus si sommano agli oggetti!</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">⚠️ Freccia Spezzata</div>
+      <div class="cmd-desc"><strong>10% di probabilità</strong> ad ogni tiro: la freccia si spezza e non guadagni nulla. Scudo e Amuleto possono proteggerti.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🔥 Streak Giornaliera</div>
+      <div class="cmd-desc">Gioca ogni giorno senza saltarne uno. Ogni giorno consecutivo aggiunge <strong>+5% EXP</strong> (massimo +50%). Si azzera se salti un giorno.</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep">⚜ · · · · · ⚜</div>
+
+<!-- OGGETTI -->
+<div class="full-section" id="oggetti">
+<section>
+  <div class="section-header">
+    <p class="section-label">Drop Rate 25%</p>
+    <h2 class="section-title">🎒 Oggetti</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="text-align:center;color:var(--text-dim);margin-bottom:2rem;font-style:italic;">
+    Ad ogni <code style="color:var(--crimson-light)">!freccia</code> hai il 25% di trovare un oggetto. Puoi tenerne massimo 5 per tipo.
+  </p>
+
+  <div class="items-grid">
+    <div class="item-card">
+      <div class="item-emoji">🛡️</div>
+      <div class="item-name">Scudo Anti-Malus</div>
+      <div class="item-effect">Blocca la prossima freccia spezzata. Si consuma dopo un utilizzo.</div>
+      <div class="item-rarity rarity-comune">Comune • 30%</div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">🥉</div>
+      <div class="item-name">Freccia di Bronzo</div>
+      <div class="item-effect">Garantisce un risultato minimo di <strong>5 punti</strong> al prossimo tiro.</div>
+      <div class="item-rarity rarity-non-comune">Non comune • 25%</div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">🔥</div>
+      <div class="item-name">Freccia di Fuoco</div>
+      <div class="item-effect">Moltiplica i punti del prossimo tiro per <strong>×2</strong>.</div>
+      <div class="item-rarity rarity-non-comune">Non comune • 17%</div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">🍀</div>
+      <div class="item-name">Amuleto Fortuna</div>
+      <div class="item-effect">Protegge dai malus per i prossimi <strong>3 tiri</strong> consecutivi.</div>
+      <div class="item-rarity rarity-raro">Raro • 11%</div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">🥈</div>
+      <div class="item-name">Freccia d'Argento</div>
+      <div class="item-effect">Moltiplica i punti del prossimo tiro per <strong>×2</strong>.</div>
+      <div class="item-rarity rarity-raro">Raro • 9%</div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">⚡</div>
+      <div class="item-name">Freccia Fulmine</div>
+      <div class="item-effect">Il prossimo <code>!freccia</code> <strong>ignora il cooldown</strong> di 5 minuti.</div>
+      <div class="item-rarity rarity-epico">Epico • 6%</div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">🥇</div>
+      <div class="item-name">Freccia d'Oro</div>
+      <div class="item-effect">Garantisce minimo <strong>7 punti</strong> e moltiplica per <strong>×3</strong>. Il migliore!</div>
+      <div class="item-rarity rarity-leggendario">Leggendario • 3%</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep">👑 · · · · · 🌟</div>
+
+<!-- TITOLI -->
+<div class="full-section" id="titoli">
+<section>
+  <div class="section-header">
+    <p class="section-label">Progressione</p>
+    <h2 class="section-title">🏅 Titoli & Livelli</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="text-align:center;color:var(--text-dim);margin-bottom:2rem;font-style:italic;">
+    Guadagni EXP pari alla metà dei punti ad ogni tiro. I titoli non hanno limite massimo.
+  </p>
+  <div class="titles-list">
+    <div class="title-row"><span>🌱</span><span class="title-name">Novizio</span><span class="title-exp">0 EXP</span></div>
+    <div class="title-row"><span>🏹</span><span class="title-name">Arciere</span><span class="title-exp">50 EXP</span></div>
+    <div class="title-row"><span>🎯</span><span class="title-name">Tiratore</span><span class="title-exp">150 EXP</span></div>
+    <div class="title-row"><span>⚔️</span><span class="title-name">Guerriero</span><span class="title-exp">300 EXP</span></div>
+    <div class="title-row"><span>🛡️</span><span class="title-name">Veterano</span><span class="title-exp">500 EXP</span></div>
+    <div class="title-row"><span>🌟</span><span class="title-name">Campione</span><span class="title-exp">750 EXP</span></div>
+    <div class="title-row"><span>💎</span><span class="title-name">Élite</span><span class="title-exp">1.100 EXP</span></div>
+    <div class="title-row"><span>🔥</span><span class="title-name">Leggenda</span><span class="title-exp">1.500 EXP</span></div>
+    <div class="title-row"><span>⚡</span><span class="title-name">Mito</span><span class="title-exp">2.000 EXP</span></div>
+    <div class="title-row"><span>💀</span><span class="title-name">Predatore</span><span class="title-exp">2.700 EXP</span></div>
+    <div class="title-row"><span>👁️</span><span class="title-name">Ombra</span><span class="title-exp">3.500 EXP</span></div>
+    <div class="title-row"><span>🌙</span><span class="title-name">Astrale</span><span class="title-exp">4.500 EXP</span></div>
+    <div class="title-row"><span>☄️</span><span class="title-name">Cosmico</span><span class="title-exp">6.000 EXP</span></div>
+    <div class="title-row"><span>🌌</span><span class="title-name">Galattico</span><span class="title-exp">8.000 EXP</span></div>
+    <div class="title-row" style="border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.05)">
+      <span>👑</span><span class="title-name" style="color:var(--gold-light)">Cupido Immortale</span><span class="title-exp" style="color:var(--gold)">10.000 EXP</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep">🏆 · · · · · 🏆</div>
+
+<!-- CLASSIFICA -->
+<div class="full-section classifica-section" id="classifica">
+<section>
+  <div class="section-header">
+    <p class="section-label">Top 8 Mensile</p>
+    <h2 class="section-title">🏆 Classifica</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="month-tabs" id="monthTabs"></div>
+  <div id="leaderboards"></div>
+</section>
+</div>
+
+<div class="sep">🏛️ · · · · · 🏛️</div>
+
+<!-- REGOLE -->
+<div class="full-section" id="regole">
+<section>
+  <div class="section-header">
+    <p class="section-label">Il Codice dell'Arciere</p>
+    <h2 class="section-title">📖 Regole</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="rules-list">
+    <div class="rule-item">
+      <span class="rule-num">I</span>
+      <span class="rule-text"><strong>Rispetta i tempi di cooldown.</strong> Ogni arciere ha diritto a un tiro ogni 5 minuti. La Freccia Fulmine è l'unico modo per bypassare questo limite.</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">II</span>
+      <span class="rule-text"><strong>Anti-scalpo nelle sfide.</strong> Non puoi sfidare un giocatore che ha meno del 35% dei tuoi punti. Le sfide sono tra pari, non caccia al debole.</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">III</span>
+      <span class="rule-text"><strong>Cooldown sfide.</strong> Dopo aver lanciato una sfida devi attendere <strong>15 minuti</strong> prima di poterne lanciare un'altra.</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">IV</span>
+      <span class="rule-text"><strong>Le sfide scadono.</strong> Chi riceve una sfida ha <strong>2 minuti</strong> per accettarla o rifiutarla. Trascorso quel tempo, la sfida viene annullata automaticamente.</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">V</span>
+      <span class="rule-text"><strong>Massimo 5 oggetti per tipo.</strong> L'inventario ha un limite. Se lo superi, gli oggetti trovati vengono persi. Usa quello che hai!</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">VI</span>
+      <span class="rule-text"><strong>Streak giornaliera.</strong> Per mantenere il bonus EXP devi giocare <strong>almeno una volta al giorno</strong>. Saltare anche un solo giorno azzera la streak.</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">VII</span>
+      <span class="rule-text"><strong>Hall of Fame mensile.</strong> Il primo di ogni mese i top 3 in classifica vengono immortalati nella Hall of Fame. I punti del mese rimangono per la classifica storica.</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">VIII</span>
+      <span class="rule-text"><strong>Comportamento corretto.</strong> Nessun flood di comandi, nessun tentativo di abusare del bot. Gli admin si riservano il diritto di correggere i dati in caso di anomalie.</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep">⚜ · · · · · ⚜</div>
+
+<!-- SERVER -->
+<div class="full-section" id="server">
+<section>
+  <div class="section-header">
+    <p class="section-label">Vieni a giocare</p>
+    <h2 class="section-title">🌐 Dove Trovarci</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="server-box">
+    <p class="server-label">Rete IRC</p>
+    <p class="server-value">IRCNet / Azzurra / Libera (modifica qui)</p>
+    <p class="server-label" style="margin-top:1rem">Canale</p>
+    <p class="server-value">#Amore</p>
+    <p class="server-label" style="margin-top:1rem">Bot</p>
+    <p class="server-value">YuKi</p>
+    <div style="margin-top:1.5rem">
+      <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:0.5rem">Per connetterti con AdiIRC:</p>
+      <code class="server-copy" onclick="navigator.clipboard.writeText('/join #Amore');this.textContent='✅ Copiato!';setTimeout(()=>this.textContent='/join #Amore',2000)">/join #Amore</code>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>🏹 <strong>Arciere Leggendario</strong> v4.3.6 — Creato da <strong>Mr`LoVe</strong></p>
+  <p style="margin-top:0.5rem;font-size:0.8rem">Bot: YuKi • Gioco IRC • Tutti i diritti riservati</p>
+</footer>
+
+<script>
+// ── PARTICLES ──
+const container = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (8 + Math.random() * 15) + 's';
+  p.style.animationDelay = (Math.random() * 15) + 's';
+  p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+  container.appendChild(p);
+}
+
+// ── CLASSIFICA DATA ──
+// 👇 MODIFICA QUI per aggiornare le classifiche mensili
+const classifiche = {
+  "Marzo 2026": [
+    { nick: "astenic4_aspis", pts: 1986, titolo: "🌟 Campione", streak: 5 },
+    { nick: "Zanshine",       pts: 1973, titolo: "🌟 Campione", streak: 3 },
+    { nick: "Icarus",         pts: 1864, titolo: "🌟 Campione", streak: 0 },
+    { nick: "Mr`LoVe",        pts: 1747, titolo: "🌟 Campione", streak: 7 },
+    // aggiungi altri giocatori qui sotto:
+    // { nick: "NomeGiocatore", pts: 1200, titolo: "💎 Élite", streak: 2 },
+  ],
+  // Aggiungi altri mesi così:
+  // "Aprile 2026": [
+  //   { nick: "NomeGiocatore", pts: 2500, titolo: "🔥 Leggenda", streak: 10 },
+  // ],
+};
+
+// ── RENDER CLASSIFICA ──
+const tabsEl = document.getElementById('monthTabs');
+const lbEl = document.getElementById('leaderboards');
+const mesi = Object.keys(classifiche);
+
+if (mesi.length === 0) {
+  lbEl.innerHTML = '<div class="lb-empty">📋 Nessuna classifica disponibile per il momento.<br><em>Torna a fine mese!</em></div>';
+} else {
+  mesi.forEach((mese, idx) => {
+    // Tab
+    const tab = document.createElement('button');
+    tab.className = 'month-tab' + (idx === mesi.length - 1 ? ' active' : '');
+    tab.textContent = mese;
+    tab.onclick = () => {
+      document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.leaderboard').forEach(l => l.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('lb-' + idx).classList.add('active');
+    };
+    tabsEl.appendChild(tab);
+
+    // Leaderboard
+    const lb = document.createElement('div');
+    lb.className = 'leaderboard' + (idx === mesi.length - 1 ? ' active' : '');
+    lb.id = 'lb-' + idx;
+
+    const giocatori = classifiche[mese];
+    const top8 = giocatori.slice(0, 8);
+
+    lb.innerHTML = '<div class="lb-title">🏆 ' + mese + '</div>' +
+      top8.map((g, i) => {
+        const posClass = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
+        const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1) + '°';
+        const streakBadge = g.streak >= 3 ? ' 🔥' + g.streak + 'gg' : '';
+        return '<div class="lb-row ' + posClass + '">' +
+          '<div class="lb-pos">' + medal + '</div>' +
+          '<div class="lb-info">' +
+            '<div class="lb-nick">' + g.nick + streakBadge + '</div>' +
+            '<div class="lb-title-text">' + g.titolo + '</div>' +
+          '</div>' +
+          '<div class="lb-pts">' + g.pts.toLocaleString('it-IT') + '<span>punti</span></div>' +
+        '</div>';
+      }).join('');
+
+    lbEl.appendChild(lb);
+  });
+}
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── ANIMATE ON SCROLL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.cmd-card, .item-card, .title-row, .rule-item, .lb-row').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
