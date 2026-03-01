@@ -942,8 +942,7 @@ for (let i = 0; i < 30; i++) {
 // ── CLASSIFICA DATA ──
 const classifiche = {
   "Gennaio 2026":   [],
-  "Febbraio 2026":  [],
-  "Marzo 2026": [
+  "Febbraio 2026": [
     { nick: "astenic4_aspis", pts: 1986, titolo: "🌟 Campione", streak: 5 },
     { nick: "Zanshine",       pts: 1973, titolo: "🌟 Campione", streak: 3 },
     { nick: "Icarus",         pts: 1753, titolo: "🌟 Campione", streak: 0 },
@@ -953,6 +952,7 @@ const classifiche = {
     { nick: "Asia",           pts: 989,  titolo: "⚔️ Guerriero", streak: 0 },
     { nick: "Stregone^",      pts: 518,  titolo: "🎯 Tiratore",  streak: 0 },
   ],
+  "Marzo 2026":     [],
   "Aprile 2026":    [],
   "Maggio 2026":    [],
   "Giugno 2026":    [],
@@ -974,7 +974,7 @@ if (mesi.length === 0) {
 } else {
   mesi.forEach((mese, idx) => {
     const tab = document.createElement('button');
-    tab.className = 'month-tab' + (mese === 'Marzo 2026' ? ' active' : '');
+    tab.className = 'month-tab' + (mese === 'Febbraio 2026' ? ' active' : '');
     tab.textContent = mese;
     tab.onclick = () => {
       document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
@@ -985,7 +985,7 @@ if (mesi.length === 0) {
     tabsEl.appendChild(tab);
 
     const lb = document.createElement('div');
-    lb.className = 'leaderboard' + (mese === 'Marzo 2026' ? ' active' : '');
+    lb.className = 'leaderboard' + (mese === 'Febbraio 2026' ? ' active' : '');
     lb.id = 'lb-' + idx;
 
     const giocatori = classifiche[mese];
