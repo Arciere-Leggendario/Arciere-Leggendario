@@ -256,7 +256,18 @@
   .classifica-section { background: linear-gradient(180deg, transparent, rgba(201,168,76,0.03), transparent); }
 
   /* ── MONTH TABS ── */
-  .month-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem; }
+  .month-tabs {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 700px) {
+    .month-tabs { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 400px) {
+    .month-tabs { grid-template-columns: repeat(2, 1fr); }
+  }
   .month-tab {
     font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em;
     padding: 0.5rem 1.2rem; background: transparent;
@@ -434,7 +445,7 @@
 
   <div class="hero-bow">🏹</div>
   <h1>Arciere<br>Leggendario</h1>
-  <p class="hero-subtitle">IRC Game • Canale #Amore</p>
+  <p class="hero-subtitle">IRC Game</p>
 
   <div class="hero-divider"><span>⚜</span></div>
 
@@ -806,13 +817,10 @@
   <div class="server-box">
     <p class="server-label">Rete IRC</p>
     <p class="server-value">irc.simosnap.com</p>
-    <p class="server-label" style="margin-top:1rem">Canale</p>
-    <p class="server-value">#Amore</p>
     <p class="server-label" style="margin-top:1rem">Bot</p>
     <p class="server-value">YuKi</p>
     <div style="margin-top:1.5rem">
-      <!-- MODIFICATO: stesso stile di server-value, apre il link in una nuova scheda -->
-      <p class="server-label" style="margin-bottom:0.5rem">Per raggiungerci in canale</p>
+      <p class="server-label" style="margin-bottom:0.5rem">Collegati al gioco</p>
       <a
         href="https://amore.altervista.org/chat.html"
         target="_blank"
@@ -853,47 +861,59 @@
       Compila il modulo qui sotto — il tuo messaggio arriverà direttamente a <strong>Mr`LoVe</strong>.
     </p>
 
-    <div class="contact-form" id="contactForm">
+    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xreavywo" method="POST">
+
+      <!-- Campo nascosto: identifica la fonte -->
+      <input type="hidden" name="_subject" id="fs-subject" value="[Arciere Leggendario] Nuova segnalazione">
+      <!-- Disabilita il redirect di Formspree, gestiamo noi la risposta -->
+      <input type="hidden" name="_next" value="about:blank">
+
       <div class="contact-row">
         <div class="contact-field">
           <label for="cf-nick">🏹 Il tuo Nick IRC</label>
-          <input type="text" id="cf-nick" placeholder="Es. Zanshine" maxlength="50">
+          <input type="text" id="cf-nick" name="nick_irc" placeholder="Es. DarkArrow92" maxlength="50">
         </div>
         <div class="contact-field">
-          <label for="cf-type">📂 Tipo di segnalazione</label>
-          <select id="cf-type">
-            <option value="">— Seleziona —</option>
-            <option value="bug">🐛 Bug / Errore</option>
-            <option value="consiglio">💡 Consiglio / Idea</option>
-            <option value="classifica">🏆 Errore in classifica</option>
-            <option value="oggetto">🎒 Problema con oggetto</option>
-            <option value="altro">📝 Altro</option>
-          </select>
+          <label for="cf-email">📧 La tua Email (per risponderti)</label>
+          <input type="email" id="cf-email" name="email" placeholder="tuamail@esempio.com" required>
         </div>
       </div>
 
-      <div class="contact-field">
-        <label for="cf-oggetto">✏️ Oggetto</label>
-        <input type="text" id="cf-oggetto" placeholder="Breve descrizione del problema o suggerimento" maxlength="100">
+      <div class="contact-row">
+        <div class="contact-field">
+          <label for="cf-type">📂 Tipo di segnalazione</label>
+          <select id="cf-type" name="tipo" required>
+            <option value="">— Seleziona —</option>
+            <option value="Bug / Errore">🐛 Bug / Errore</option>
+            <option value="Consiglio / Idea">💡 Consiglio / Idea</option>
+            <option value="Errore in classifica">🏆 Errore in classifica</option>
+            <option value="Problema con oggetto">🎒 Problema con oggetto</option>
+            <option value="Altro">📝 Altro</option>
+          </select>
+        </div>
+        <div class="contact-field">
+          <label for="cf-oggetto">✏️ Oggetto</label>
+          <input type="text" id="cf-oggetto" name="oggetto" placeholder="Breve descrizione" maxlength="100" required>
+        </div>
       </div>
 
       <div class="contact-field">
         <label for="cf-msg">💬 Messaggio</label>
-        <textarea id="cf-msg" rows="5" placeholder="Descrivi nel dettaglio il bug, l'errore riscontrato o il tuo consiglio per migliorare il gioco..."></textarea>
+        <textarea id="cf-msg" name="messaggio" rows="5" placeholder="Descrivi nel dettaglio il bug, l'errore riscontrato o il tuo consiglio per migliorare il gioco..." required></textarea>
       </div>
 
-      <button class="contact-btn" onclick="inviaContatto()">⚔️ Invia Segnalazione</button>
+      <button type="submit" class="contact-btn">⚔️ Invia Segnalazione</button>
 
       <div class="contact-success" id="contactSuccess">
         ✅ Messaggio inviato con successo!<br>
-        <span style="color:var(--text-dim);font-family:'Crimson Text',serif;font-style:italic;font-size:0.9rem">Mr`LoVe ti risponderà il prima possibile su IRC.</span>
+        <span style="color:var(--text-dim);font-family:'Crimson Text',serif;font-style:italic;font-size:0.9rem">Mr`LoVe ti risponderà il prima possibile alla tua email.</span>
       </div>
-    </div>
+
+    </form>
 
     <div class="contact-direct">
-      Oppure contattaci direttamente su IRC:<br>
-      <strong>/query Mr`LoVe &lt;il tuo messaggio&gt;</strong><br>
-      <span style="font-size:0.85rem">oppure cerca <strong>Mr`LoVe</strong> nel canale <strong>#Amore</strong> su irc.simosnap.com</span>
+      Oppure contattaci direttamente su IRC<br>
+      <span style="font-size:0.85rem">collegandoti al server <strong>irc.simosnap.com</strong> e contattando direttamente <strong>Mr`LoVe</strong></span>
     </div>
   </div>
 </section>
@@ -921,6 +941,8 @@ for (let i = 0; i < 30; i++) {
 
 // ── CLASSIFICA DATA ──
 const classifiche = {
+  "Gennaio 2026":   [],
+  "Febbraio 2026":  [],
   "Marzo 2026": [
     { nick: "astenic4_aspis", pts: 1986, titolo: "🌟 Campione", streak: 5 },
     { nick: "Zanshine",       pts: 1973, titolo: "🌟 Campione", streak: 3 },
@@ -931,10 +953,15 @@ const classifiche = {
     { nick: "Asia",           pts: 989,  titolo: "⚔️ Guerriero", streak: 0 },
     { nick: "Stregone^",      pts: 518,  titolo: "🎯 Tiratore",  streak: 0 },
   ],
-  // Aggiungi altri mesi così:
-  // "Aprile 2026": [
-  //   { nick: "NomeGiocatore", pts: 2500, titolo: "🔥 Leggenda", streak: 10 },
-  // ],
+  "Aprile 2026":    [],
+  "Maggio 2026":    [],
+  "Giugno 2026":    [],
+  "Luglio 2026":    [],
+  "Agosto 2026":    [],
+  "Settembre 2026": [],
+  "Ottobre 2026":   [],
+  "Novembre 2026":  [],
+  "Dicembre 2026":  [],
 };
 
 // ── RENDER CLASSIFICA ──
@@ -947,7 +974,7 @@ if (mesi.length === 0) {
 } else {
   mesi.forEach((mese, idx) => {
     const tab = document.createElement('button');
-    tab.className = 'month-tab' + (idx === mesi.length - 1 ? ' active' : '');
+    tab.className = 'month-tab' + (mese === 'Marzo 2026' ? ' active' : '');
     tab.textContent = mese;
     tab.onclick = () => {
       document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
@@ -958,14 +985,16 @@ if (mesi.length === 0) {
     tabsEl.appendChild(tab);
 
     const lb = document.createElement('div');
-    lb.className = 'leaderboard' + (idx === mesi.length - 1 ? ' active' : '');
+    lb.className = 'leaderboard' + (mese === 'Marzo 2026' ? ' active' : '');
     lb.id = 'lb-' + idx;
 
     const giocatori = classifiche[mese];
     const top8 = giocatori.slice(0, 8);
 
-    lb.innerHTML = '<div class="lb-title">🏆 ' + mese + '</div>' +
-      top8.map((g, i) => {
+    const emptyHtml = '<div class="lb-empty">📋 Classifica non ancora disponibile per questo mese.<br><em>Torna a fine mese!</em></div>';
+
+    lb.innerHTML = '<div class="lb-title">🏆 Top 8 Arcieri</div>' +
+      (top8.length === 0 ? emptyHtml : top8.map((g, i) => {
         const posClass = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🏹';
         const streakBadge = g.streak >= 3 ? ' 🔥' + g.streak + 'gg' : '';
@@ -977,43 +1006,52 @@ if (mesi.length === 0) {
           '</div>' +
           '<div class="lb-pts">' + g.pts.toLocaleString('it-IT') + '<span>punti</span></div>' +
         '</div>';
-      }).join('');
+      }).join(''));
 
     lbEl.appendChild(lb);
   });
 }
 
-// ── CONTACT FORM ──
-function inviaContatto() {
-  const nick    = document.getElementById('cf-nick').value.trim();
-  const tipo    = document.getElementById('cf-type').value;
-  const oggetto = document.getElementById('cf-oggetto').value.trim();
-  const msg     = document.getElementById('cf-msg').value.trim();
+// ── CONTACT FORM (Formspree) ──
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-  if (!tipo || !oggetto || !msg) {
-    alert('⚠️ Compila almeno il tipo, l\'oggetto e il messaggio prima di inviare.');
-    return;
-  }
+    const btn = contactForm.querySelector('.contact-btn');
+    btn.textContent = '⏳ Invio in corso...';
+    btn.disabled = true;
 
-  // Build mailto link directed to Mr`LoVe (IRC admin)
-  // Since we can't send to an IRC nick directly, we open a mailto as fallback
-  const subject = encodeURIComponent('[Arciere Leggendario] ' + (tipo.toUpperCase()) + ': ' + oggetto);
-  const body = encodeURIComponent(
-    'Nick IRC: ' + (nick || 'Anonimo') + '\n' +
-    'Tipo: ' + tipo + '\n' +
-    'Oggetto: ' + oggetto + '\n\n' +
-    'Messaggio:\n' + msg
-  );
-  // Show success message (simulate send — in production connect to a backend)
-  document.getElementById('contactSuccess').style.display = 'block';
-  document.getElementById('cf-nick').value = '';
-  document.getElementById('cf-type').value = '';
-  document.getElementById('cf-oggetto').value = '';
-  document.getElementById('cf-msg').value = '';
+    // Aggiorna il subject dinamicamente
+    const tipo    = document.getElementById('cf-type').value;
+    const oggetto = document.getElementById('cf-oggetto').value.trim();
+    document.getElementById('fs-subject').value =
+      '[Arciere Leggendario] ' + tipo + ': ' + oggetto;
 
-  setTimeout(() => {
-    document.getElementById('contactSuccess').style.display = 'none';
-  }, 6000);
+    try {
+      const data = new FormData(contactForm);
+      const resp = await fetch(contactForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (resp.ok) {
+        contactForm.reset();
+        document.getElementById('contactSuccess').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('contactSuccess').style.display = 'none';
+        }, 7000);
+      } else {
+        alert('❌ Errore nell\'invio. Riprova tra qualche istante.');
+      }
+    } catch(err) {
+      alert('❌ Connessione fallita. Controlla la tua rete e riprova.');
+    }
+
+    btn.textContent = '⚔️ Invia Segnalazione';
+    btn.disabled = false;
+  });
 }
 
 // ── SMOOTH SCROLL ──
