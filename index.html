@@ -229,10 +229,11 @@
   .target-row { display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem 1rem; background: var(--bg-card); border: 1px solid rgba(201,168,76,0.1); transition: all 0.2s; }
   .target-row:hover { border-color: rgba(201,168,76,0.3); transform: translateX(5px); }
   .target-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
-  .target-pts { font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold-light); min-width: 60px; }
+  .target-pts { font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold-light); min-width: 70px; }
   .target-name { color: var(--parchment-dark); font-size: 0.95rem; }
+  .target-bonus { color: var(--crimson-light); font-size: 0.8rem; margin-left: auto; font-family: 'Cinzel', serif; white-space: nowrap; }
 
-  .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
+  .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.2rem; }
   .item-card { background: var(--bg-card); border: 1px solid rgba(201,168,76,0.1); padding: 1.2rem; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; }
   .item-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(201,168,76,0.05), transparent); opacity: 0; transition: opacity 0.3s; }
   .item-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.35); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
@@ -240,12 +241,21 @@
   .item-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
   .item-name { font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700; color: var(--gold-light); margin-bottom: 0.4rem; }
   .item-effect { color: var(--parchment-dark); font-size: 0.9rem; line-height: 1.5; }
-  .item-rarity { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 0.5rem; padding: 0.2rem 0.5rem; display: inline-block; }
+  .item-tags { display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem; }
+  .item-rarity { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.5rem; display: inline-block; }
+  .item-market-tag { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.2rem 0.5rem; display: inline-block; color: #5b9bd5; border: 1px solid #2980b9; }
   .rarity-comune { color: #aaa; border: 1px solid #555; }
   .rarity-non-comune { color: #5b9bd5; border: 1px solid #2980b9; }
   .rarity-raro { color: #a855f7; border: 1px solid #7c3aed; }
   .rarity-epico { color: var(--gold); border: 1px solid var(--gold-dark); }
   .rarity-leggendario { color: var(--crimson-light); border: 1px solid var(--crimson); }
+
+  /* Market section */
+  .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+  .market-card { background: var(--bg-card); border: 1px solid rgba(42,80,150,0.3); padding: 1.2rem; text-align: center; transition: all 0.3s; position: relative; }
+  .market-card:hover { border-color: rgba(42,80,150,0.7); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+  .market-price { font-family: 'Cinzel Decorative', cursive; font-size: 1.3rem; color: var(--gold); font-weight: 700; margin: 0.5rem 0; }
+  .market-price span { font-size: 0.75rem; color: var(--text-dim); font-family: 'Cinzel', serif; display: block; }
 
   .titles-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.8rem; }
   .title-row { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1.2rem; background: var(--bg-card); border: 1px solid rgba(201,168,76,0.1); transition: all 0.2s; }
@@ -304,18 +314,25 @@
   .lb-title-text { font-size: 0.85rem; color: var(--text-dim); font-style: italic; }
   .lb-pts { font-family: 'Cinzel Decorative', cursive; font-size: 1.1rem; color: var(--gold); text-align: right; }
   .lb-pts span { display: block; font-family: 'Crimson Text', serif; font-size: 0.75rem; color: var(--text-dim); font-style: normal; }
+  .lb-prize { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--crimson-light); text-align: right; white-space: nowrap; padding: 0.2rem 0.5rem; border: 1px solid rgba(139,26,26,0.4); background: rgba(139,26,26,0.1); }
   .lb-empty { text-align: center; color: var(--text-dim); font-style: italic; padding: 3rem; border: 1px dashed rgba(201,168,76,0.2); }
+
+  /* Prize banner */
+  .prize-banner {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 1.5rem; padding: 1rem;
+    background: rgba(139,26,26,0.08); border: 1px solid rgba(139,26,26,0.25);
+  }
+  .prize-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+  .prize-medal { font-size: 1.5rem; }
+  .prize-pts { font-family: 'Cinzel Decorative', cursive; font-size: 1rem; color: var(--gold); }
+  .prize-label { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; }
 
   .hof-section { background: linear-gradient(180deg, transparent, rgba(139,26,26,0.05), transparent); border-top: 1px solid rgba(201,168,76,0.1); }
   .hof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
   @media (max-width: 700px) { .hof-grid { grid-template-columns: 1fr; } }
   .hof-card { background: var(--bg-card); border: 1px solid rgba(201,168,76,0.15); padding: 2rem 1.5rem; text-align: center; position: relative; transition: all 0.3s; }
   .hof-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-color: rgba(201,168,76,0.4); }
-  .hof-medal { font-size: 3rem; margin-bottom: 0.5rem; }
-  .hof-nick { font-family: 'Cinzel Decorative', cursive; font-size: 1rem; color: var(--gold-light); margin-bottom: 0.3rem; }
-  .hof-pts { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--gold); font-weight: 700; }
-  .hof-title-text { font-size: 0.9rem; color: var(--text-dim); font-style: italic; margin-top: 0.3rem; }
-  .hof-month { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crimson-light); margin-top: 1rem; }
 
   .rules-list { display: flex; flex-direction: column; gap: 1rem; counter-reset: rule; }
   .rule-item { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.2rem 1.5rem; background: var(--bg-card); border: 1px solid rgba(201,168,76,0.1); transition: all 0.2s; }
@@ -332,12 +349,6 @@
   .server-box::before { content: '🏹'; position: absolute; font-size: 8rem; opacity: 0.03; top: 50%; left: 50%; transform: translate(-50%, -50%); }
   .server-label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem; }
   .server-value { font-family: 'Cinzel Decorative', cursive; font-size: 1.3rem; color: var(--gold-light); margin-bottom: 1.5rem; text-shadow: 0 0 15px var(--glow); }
-  .server-copy {
-    font-family: 'Courier New', monospace; font-size: 1rem; color: var(--crimson-light);
-    background: rgba(139,26,26,0.15); padding: 0.8rem 1.5rem;
-    border: 1px solid rgba(139,26,26,0.3); display: inline-block; cursor: pointer; transition: all 0.2s;
-  }
-  .server-copy:hover { background: rgba(139,26,26,0.3); color: var(--gold-light); }
 
   /* ── CONTATTI ── */
   .contact-section { background: linear-gradient(180deg, transparent, rgba(139,26,26,0.04), transparent); }
@@ -408,15 +419,12 @@
 
   .full-section { width: 100%; background: inherit; }
 
-  .tooltip { position: relative; }
-  .tooltip::after {
-    content: attr(data-tip); position: absolute; bottom: 120%; left: 50%;
-    transform: translateX(-50%); background: var(--bg-card);
-    border: 1px solid var(--gold); color: var(--gold-light);
-    padding: 0.3rem 0.8rem; font-size: 0.8rem; font-family: 'Cinzel', serif;
-    white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 10;
+  .new-badge {
+    font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 0.15rem 0.4rem;
+    background: rgba(139,26,26,0.3); border: 1px solid var(--crimson);
+    color: var(--crimson-light); vertical-align: middle; margin-left: 0.4rem;
   }
-  .tooltip:hover::after { opacity: 1; }
 
   @media (max-width: 600px) {
     .commands-grid { grid-template-columns: 1fr; }
@@ -458,6 +466,7 @@
     <a href="#comandi" class="btn btn-primary">📋 Comandi</a>
     <a href="#classifica" class="btn">🏆 Classifica</a>
     <a href="#oggetti" class="btn">🎒 Oggetti</a>
+    <a href="#market" class="btn">🏪 Market</a>
     <a href="#regole" class="btn">📖 Regole</a>
   </div>
 
@@ -471,6 +480,7 @@
     <a href="#comandi">Comandi</a>
     <a href="#bersaglio">Bersaglio</a>
     <a href="#oggetti">Oggetti</a>
+    <a href="#market">Market</a>
     <a href="#titoli">Titoli</a>
     <a href="#classifica">Classifica</a>
     <a href="#regole">Regole</a>
@@ -492,7 +502,7 @@
     <div class="cmd-card">
       <div class="cmd-name">🏹 Freccia</div>
       <div class="cmd-syntax">!freccia</div>
-      <div class="cmd-desc">Scocca una freccia verso il bersaglio. Cooldown di <strong>5 minuti</strong> tra un tiro e l'altro. Ogni tiro può far cadere un oggetto (25% di probabilità).</div>
+      <div class="cmd-desc">Scocca una freccia verso il bersaglio. Cooldown di <strong>5 minuti</strong> tra un tiro e l'altro. Ad ogni tiro hai il <strong>45%</strong> di probabilità di trovare un oggetto, e il <strong>5%</strong> di ottenere un giro extra immediato.</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">🎒 Usa Oggetto</div>
@@ -527,17 +537,42 @@
     <div class="cmd-card">
       <div class="cmd-name">⚔️ Sfida</div>
       <div class="cmd-syntax">!sfida &lt;nick&gt; [punti]</div>
-      <div class="cmd-desc">Lancia una sfida PvP. La posta si calcola automaticamente (~20% dei tuoi punti, max 50) oppure puoi specificarla (min 5, max 200). Scade in 2 minuti. Cooldown 15 min.</div>
+      <div class="cmd-desc">Lancia una sfida PvP. La posta si calcola automaticamente (~20% dei tuoi punti, max 50) oppure puoi specificarla (min 5, max 200). <strong>Scade a mezzanotte</strong>. Puoi sfidare solo utenti online nel canale.</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">✅ Accetta Sfida</div>
       <div class="cmd-syntax">!accetta</div>
-      <div class="cmd-desc">Accetta una sfida ricevuta. Entrambi i giocatori tirano e chi colpisce più in alto vince la posta in punti ed EXP.</div>
+      <div class="cmd-desc">Accetta una sfida ricevuta. Entrambi i giocatori tirano e chi colpisce più in alto vince la posta in punti ed EXP. Il vincitore ha il <strong>55% di chance</strong> di trovare un oggetto bonus!</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">🚫 Rifiuta Sfida</div>
       <div class="cmd-syntax">!rifiuta</div>
-      <div class="cmd-desc">Rifiuta una sfida ricevuta. Nessun punto viene scambiato.</div>
+      <div class="cmd-desc">Rifiuta una sfida ricevuta. Attenzione: rifiutare <strong>3 sfide valide</strong> (posta ≤ 50 pts) provoca un malus automatico di <strong>−50 pts</strong>!</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🔄 Scambio Oggetti <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-syntax">!scambia &lt;nick&gt; &lt;oggetto_offerto&gt; &lt;oggetto_voluto&gt;</div>
+      <div class="cmd-desc">Proponi uno scambio bilaterale di oggetti a un altro giocatore. La proposta scade in <strong>2 minuti</strong>. L'oggetto offerto viene messo in garanzia finché non c'è risposta.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">✅ Accetta Scambio <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-syntax">!accettascambio</div>
+      <div class="cmd-desc">Accetta uno scambio di oggetti ricevuto. Entrambi i giocatori devono avere l'oggetto richiesto e il slot libero nell'inventario.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🚫 Rifiuta Scambio <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-syntax">!rifiutascambio</div>
+      <div class="cmd-desc">Rifiuta uno scambio ricevuto. L'oggetto messo in garanzia dall'offerente viene restituito automaticamente.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🏪 Market <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-syntax">!market</div>
+      <div class="cmd-desc">Mostra il listino del negozio in <em>notice privato</em>: puoi acquistare oggetti spendendo i tuoi punti, senza aspettare il drop casuale.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🛒 Compra <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-syntax">!compra &lt;oggetto&gt;</div>
+      <div class="cmd-desc">Acquista un oggetto dal market usando i tuoi punti. Il costo viene scalato immediatamente. Inventario max 5 per tipo.</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">🏛️ Hall of Fame</div>
@@ -552,7 +587,7 @@
     <div class="cmd-card">
       <div class="cmd-name">📖 Guida</div>
       <div class="cmd-syntax">!guida</div>
-      <div class="cmd-desc">Riceve la guida completa del gioco in <em>notice privato</em>, con tutti i dettagli su meccaniche e oggetti.</div>
+      <div class="cmd-desc">Riceve la guida completa del gioco in <em>notice privato</em>, con tutti i dettagli su meccaniche, oggetti e comandi.</div>
     </div>
   </div>
 </section>
@@ -588,16 +623,19 @@
         <div class="target-dot" style="background:#FFD700;box-shadow:0 0 8px gold"></div>
         <span class="target-pts">10 pts</span>
         <span class="target-name">🎯💛 Centro Giallo (X)</span>
+        <span class="target-bonus">+15 bonus!</span>
       </div>
       <div class="target-row">
         <div class="target-dot" style="background:#FFD700"></div>
         <span class="target-pts">9 pts</span>
         <span class="target-name">💛 Anello Giallo</span>
+        <span class="target-bonus">+8 bonus!</span>
       </div>
       <div class="target-row">
         <div class="target-dot" style="background:#E8242A"></div>
         <span class="target-pts">7–8 pts</span>
         <span class="target-name">❤️ Anello Rosso</span>
+        <span class="target-bonus">+4 bonus!</span>
       </div>
       <div class="target-row">
         <div class="target-dot" style="background:#006EB7"></div>
@@ -622,10 +660,14 @@
     </div>
   </div>
 
+  <p style="text-align:center;color:var(--text-dim);font-style:italic;margin:1.5rem 0 0.5rem;font-size:0.9rem;">
+    ✨ I tiri di precisione danno punti bonus aggiuntivi oltre al punteggio base!
+  </p>
+
   <div style="margin-top:2rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;">
     <div class="cmd-card">
       <div class="cmd-name">🎁 Bonus ogni 5 tiri</div>
-      <div class="cmd-desc">Ogni 5 tiri ottieni un moltiplicatore <strong>×2</strong> sui punti di quel tiro.</div>
+      <div class="cmd-desc">Ogni 5 tiri ottieni un moltiplicatore <strong>×2</strong> sui punti di quel tiro. Si cumula con gli oggetti attivi!</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">💥 Super Bonus ogni 20 tiri</div>
@@ -639,6 +681,14 @@
       <div class="cmd-name">🔥 Streak Giornaliera</div>
       <div class="cmd-desc">Gioca ogni giorno senza saltarne uno. Ogni giorno consecutivo aggiunge <strong>+5% EXP</strong> (massimo +50%). Si azzera se salti un giorno.</div>
     </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🎲 Giro Extra <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-desc">Ad ogni <code style="color:var(--crimson-light)">!freccia</code> hai il <strong>5% di probabilità</strong> di ottenere un giro extra: puoi tirare di nuovo senza aspettare il cooldown! Puoi accumularne al massimo <strong>2</strong>.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">⚡ Oggetti sulle Sfide</div>
+      <div class="cmd-desc">Prima di <code style="color:var(--crimson-light)">!accetta</code> puoi attivare <strong>☠️ Veleno</strong> (−3 al tiro avversario) o <strong>🪞 Specchio</strong> (riflette un mancato). Il vincitore ha il <strong>55%</strong> di chance di trovare un oggetto!</div>
+    </div>
   </div>
 </section>
 </div>
@@ -649,12 +699,13 @@
 <div class="full-section" id="oggetti">
 <section>
   <div class="section-header">
-    <p class="section-label">Drop Rate 25%</p>
+    <p class="section-label">Drop Rate 45% per tiro</p>
     <h2 class="section-title">🎒 Oggetti</h2>
     <div class="section-line"></div>
   </div>
   <p style="text-align:center;color:var(--text-dim);margin-bottom:2rem;font-style:italic;">
-    Ad ogni <code style="color:var(--crimson-light)">!freccia</code> hai il 25% di trovare un oggetto. Puoi tenerne massimo 5 per tipo.
+    Ad ogni <code style="color:var(--crimson-light)">!freccia</code> hai il <strong>45%</strong> di trovare un oggetto casuale. Puoi tenerne massimo 5 per tipo.<br>
+    Alcuni oggetti sono acquistabili anche al <a href="#market" style="color:var(--gold);text-decoration:none;">🏪 Market</a> con i tuoi punti.
   </p>
 
   <div class="items-grid">
@@ -662,43 +713,168 @@
       <div class="item-emoji">🛡️</div>
       <div class="item-name">Scudo Anti-Malus</div>
       <div class="item-effect">Blocca la prossima freccia spezzata. Si consuma dopo un utilizzo.</div>
-      <div class="item-rarity rarity-comune">Comune • 30%</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-comune">Comune • 18%</span>
+        <span class="item-market-tag">🏪 25 pts</span>
+      </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">🥉</div>
       <div class="item-name">Freccia di Bronzo</div>
       <div class="item-effect">Garantisce un risultato minimo di <strong>5 punti</strong> al prossimo tiro.</div>
-      <div class="item-rarity rarity-non-comune">Non comune • 25%</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-comune">Comune • 14%</span>
+        <span class="item-market-tag">🏪 20 pts</span>
+      </div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">⚡</div>
+      <div class="item-name">Freccia Fulmine</div>
+      <div class="item-effect">Il prossimo <code>!freccia</code> <strong>ignora il cooldown</strong> di 5 minuti. Tira subito!</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-non-comune">Non Comune • 12%</span>
+        <span class="item-market-tag">🏪 35 pts</span>
+      </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">🔥</div>
       <div class="item-name">Freccia di Fuoco</div>
       <div class="item-effect">Moltiplica i punti del prossimo tiro per <strong>×2</strong>.</div>
-      <div class="item-rarity rarity-non-comune">Non comune • 17%</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-non-comune">Non Comune • 11%</span>
+        <span class="item-market-tag">🏪 60 pts</span>
+      </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">🍀</div>
       <div class="item-name">Amuleto Fortuna</div>
       <div class="item-effect">Protegge dai malus per i prossimi <strong>3 tiri</strong> consecutivi.</div>
-      <div class="item-rarity rarity-raro">Raro • 11%</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-non-comune">Non Comune • 9%</span>
+        <span class="item-market-tag">🏪 45 pts</span>
+      </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">🥈</div>
       <div class="item-name">Freccia d'Argento</div>
       <div class="item-effect">Moltiplica i punti del prossimo tiro per <strong>×2</strong>.</div>
-      <div class="item-rarity rarity-raro">Raro • 9%</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-raro">Raro • 8%</span>
+        <span class="item-market-tag">🏪 55 pts</span>
+      </div>
     </div>
     <div class="item-card">
-      <div class="item-emoji">⚡</div>
-      <div class="item-name">Freccia Fulmine</div>
-      <div class="item-effect">Il prossimo <code>!freccia</code> <strong>ignora il cooldown</strong> di 5 minuti.</div>
-      <div class="item-rarity rarity-epico">Epico • 6%</div>
+      <div class="item-emoji">☠️</div>
+      <div class="item-name">Veleno <span class="new-badge">Nuovo</span></div>
+      <div class="item-effect">Nella prossima <strong>sfida</strong>, riduce di <strong>3 punti</strong> il tiro dell'avversario. Usa <code>!usa veleno</code> prima di <code>!accetta</code>.</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-raro">Raro • 8%</span>
+        <span class="item-market-tag">🏪 70 pts</span>
+      </div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">🪞</div>
+      <div class="item-name">Specchio <span class="new-badge">Nuovo</span></div>
+      <div class="item-effect">Nella prossima <strong>sfida</strong>, se l'avversario fa "mancato", il malus si <strong>riflette</strong> su di lui. Usa <code>!usa specchio</code> prima di <code>!accetta</code>.</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-raro">Raro • 7%</span>
+        <span class="item-market-tag">🏪 65 pts</span>
+      </div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">💎</div>
+      <div class="item-name">Cristallo <span class="new-badge">Nuovo</span></div>
+      <div class="item-effect">Garantisce un risultato minimo di <strong>8 punti</strong> al prossimo tiro. Solo da drop, non disponibile al market.</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-epico">Epico • 6%</span>
+        <span style="font-family:'Cinzel',serif;font-size:0.7rem;padding:0.2rem 0.5rem;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);display:inline-block;">Solo Drop</span>
+      </div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">⭐</div>
+      <div class="item-name">Stelle <span class="new-badge">Nuovo</span></div>
+      <div class="item-effect">Il prossimo tiro guadagna un <strong>+50% EXP</strong> aggiuntivo. Solo da drop, non disponibile al market.</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-epico">Epico • 4%</span>
+        <span style="font-family:'Cinzel',serif;font-size:0.7rem;padding:0.2rem 0.5rem;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);display:inline-block;">Solo Drop</span>
+      </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">🥇</div>
       <div class="item-name">Freccia d'Oro</div>
-      <div class="item-effect">Garantisce minimo <strong>7 punti</strong> e moltiplica per <strong>×3</strong>. Il migliore!</div>
-      <div class="item-rarity rarity-leggendario">Leggendario • 3%</div>
+      <div class="item-effect">Garantisce minimo <strong>7 punti</strong> e moltiplica per <strong>×3</strong>. Il più raro e potente! Solo da drop.</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-leggendario">Leggendario • 3%</span>
+        <span style="font-family:'Cinzel',serif;font-size:0.7rem;padding:0.2rem 0.5rem;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);display:inline-block;">Solo Drop</span>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="sep">🏪 · · · · · 🏪</div>
+
+<!-- MARKET -->
+<div class="full-section" id="market" style="background:linear-gradient(180deg,transparent,rgba(42,80,150,0.04),transparent);border-top:1px solid rgba(42,80,150,0.15);border-bottom:1px solid rgba(42,80,150,0.15);">
+<section>
+  <div class="section-header">
+    <p class="section-label">Negozio — Nuovo</p>
+    <h2 class="section-title">🏪 Market</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="text-align:center;color:var(--text-dim);margin-bottom:2rem;font-style:italic;">
+    Non vuoi aspettare il drop? Acquista oggetti direttamente con i tuoi punti usando <code style="color:var(--crimson-light)">!market</code> per il listino e <code style="color:var(--crimson-light)">!compra &lt;oggetto&gt;</code> per acquistare.<br>
+    Oro, Cristallo e Stelle sono <strong>solo da drop casuale</strong> e non disponibili al market.
+  </p>
+
+  <div class="market-grid">
+    <div class="market-card">
+      <div style="font-size:2rem">🥉</div>
+      <div class="item-name">Freccia di Bronzo</div>
+      <div class="market-price">20 <span>punti</span></div>
+      <div class="item-effect">Prossimo tiro min 5 pts</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">🛡️</div>
+      <div class="item-name">Scudo Anti-Malus</div>
+      <div class="market-price">25 <span>punti</span></div>
+      <div class="item-effect">Blocca prossima freccia spezzata</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">⚡</div>
+      <div class="item-name">Freccia Fulmine</div>
+      <div class="market-price">35 <span>punti</span></div>
+      <div class="item-effect">Salta il cooldown di 5 min</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">🍀</div>
+      <div class="item-name">Amuleto Fortuna</div>
+      <div class="market-price">45 <span>punti</span></div>
+      <div class="item-effect">3 tiri protetti da malus</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">🥈</div>
+      <div class="item-name">Freccia d'Argento</div>
+      <div class="market-price">55 <span>punti</span></div>
+      <div class="item-effect">Prossimo tiro ×2</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">🔥</div>
+      <div class="item-name">Freccia di Fuoco</div>
+      <div class="market-price">60 <span>punti</span></div>
+      <div class="item-effect">Prossimo tiro ×2</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">🪞</div>
+      <div class="item-name">Specchio</div>
+      <div class="market-price">65 <span>punti</span></div>
+      <div class="item-effect">Sfida: riflette mancato avversario</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">☠️</div>
+      <div class="item-name">Veleno</div>
+      <div class="market-price">70 <span>punti</span></div>
+      <div class="item-effect">Sfida: −3 al tiro avversario</div>
     </div>
   </div>
 </section>
@@ -745,9 +921,12 @@
 <div class="full-section classifica-section" id="classifica">
 <section>
   <div class="section-header">
-    <p class="section-label">Top 8 Mensile</p>
+    <p class="section-label">Classifiche Mensili</p>
     <h2 class="section-title">🏆 Classifica</h2>
     <div class="section-line"></div>
+    <p style="color:var(--text-dim);font-style:italic;margin-top:1rem;font-size:0.95rem;">
+      Da Maggio 2026 la classifica mensile premia i <strong>top 3 arcieri</strong> con premi in cascata: 🥇 500 pts · 🥈 300 pts · 🥉 150 pts
+    </p>
   </div>
 
   <div class="month-tabs" id="monthTabs"></div>
@@ -755,7 +934,7 @@
 </section>
 </div>
 
-<div class="sep">🏛️ · · · · · 🏛️</div>
+<div class="sep">⚜ · · · · · ⚜</div>
 
 <!-- REGOLE -->
 <div class="full-section" id="regole">
@@ -769,34 +948,38 @@
   <div class="rules-list">
     <div class="rule-item">
       <span class="rule-num">I</span>
-      <span class="rule-text"><strong>Rispetta i tempi di cooldown.</strong> Ogni arciere ha diritto a un tiro ogni 5 minuti. La Freccia Fulmine è l'unico modo per bypassare questo limite.</span>
+      <span class="rule-text"><strong>Rispetta i tempi di cooldown.</strong> Ogni arciere ha diritto a un tiro ogni 5 minuti. La Freccia Fulmine o un Giro Extra sono gli unici modi per bypassare questo limite.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">II</span>
-      <span class="rule-text"><strong>Anti-scalpo nelle sfide.</strong> Non puoi sfidare un giocatore che ha meno del 35% dei tuoi punti. Le sfide sono tra pari, non caccia al debole.</span>
+      <span class="rule-text"><strong>Anti-scalpo nelle sfide.</strong> Non puoi sfidare un giocatore che ha meno del <strong>35%</strong> dei tuoi punti. Le sfide sono tra pari, non caccia al debole.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">III</span>
-      <span class="rule-text"><strong>Cooldown sfide.</strong> Dopo aver lanciato una sfida devi attendere <strong>15 minuti</strong> prima di poterne lanciare un'altra.</span>
+      <span class="rule-text"><strong>Sfide solo con utenti online.</strong> Puoi sfidare esclusivamente chi è presente nel canale in quel momento. Le sfide scadono automaticamente a <strong>mezzanotte</strong>.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">IV</span>
-      <span class="rule-text"><strong>Le sfide scadono.</strong> Chi riceve una sfida ha <strong>2 minuti</strong> per accettarla o rifiutarla. Trascorso quel tempo, la sfida viene annullata automaticamente.</span>
+      <span class="rule-text"><strong>Una sfida alla volta.</strong> Chi ha una sfida pendente da rispondere non può essere sfidato da altri nel frattempo. Lo sfidante deve attendere una risposta prima di sfidare qualcun altro.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">V</span>
-      <span class="rule-text"><strong>Massimo 5 oggetti per tipo.</strong> L'inventario ha un limite. Se lo superi, gli oggetti trovati vengono persi. Usa quello che hai!</span>
+      <span class="rule-text"><strong>Malus per rifiuti ripetuti.</strong> Puoi rifiutare al massimo <strong>2 sfide valide</strong> (posta ≤ 50 pts). Al terzo rifiuto scatta automaticamente un <strong>malus di −50 pts</strong> e il contatore si azzera. Le sfide con posta alta (>50 pts) non contano ai fini del malus.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">VI</span>
-      <span class="rule-text"><strong>Streak giornaliera.</strong> Per mantenere il bonus EXP devi giocare <strong>almeno una volta al giorno</strong>. Saltare anche un solo giorno azzera la streak.</span>
+      <span class="rule-text"><strong>Massimo 5 oggetti per tipo.</strong> L'inventario ha un limite. Se lo superi, gli oggetti trovati vengono persi. Usa quello che hai — o scambia con gli altri arcieri!</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">VII</span>
-      <span class="rule-text"><strong>Hall of Fame mensile.</strong> Il primo di ogni mese i top 3 in classifica vengono immortalati nella Hall of Fame. I punti del mese rimangono per la classifica storica.</span>
+      <span class="rule-text"><strong>Streak giornaliera.</strong> Per mantenere il bonus EXP devi giocare <strong>almeno una volta al giorno</strong>. Saltare anche un solo giorno azzera la streak.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">VIII</span>
+      <span class="rule-text"><strong>Hall of Fame mensile e premi.</strong> Il primo di ogni mese i top 3 vengono immortalati nella Hall of Fame. Da Maggio 2026 i top 3 ricevono anche premi in punti: <strong>500 pts al 1°, 300 pts al 2°, 150 pts al 3°</strong>.</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">IX</span>
       <span class="rule-text"><strong>Comportamento corretto.</strong> Nessun flood di comandi, nessun tentativo di abusare del bot. Gli admin si riservano il diritto di correggere i dati in caso di anomalie.</span>
     </div>
   </div>
@@ -862,10 +1045,7 @@
     </p>
 
     <form class="contact-form" id="contactForm" action="https://formspree.io/f/xreavywo" method="POST">
-
-      <!-- Campo nascosto: identifica la fonte -->
       <input type="hidden" name="_subject" id="fs-subject" value="[Arciere Leggendario] Nuova segnalazione">
-      <!-- Disabilita il redirect di Formspree, gestiamo noi la risposta -->
       <input type="hidden" name="_next" value="about:blank">
 
       <div class="contact-row">
@@ -908,7 +1088,6 @@
         ✅ Messaggio inviato con successo!<br>
         <span style="color:var(--text-dim);font-family:'Crimson Text',serif;font-style:italic;font-size:0.9rem">Mr`LoVe ti risponderà il prima possibile alla tua email.</span>
       </div>
-
     </form>
 
     <div class="contact-direct">
@@ -921,7 +1100,6 @@
 
 <!-- FOOTER -->
 <footer>
-  <!-- MODIFICATO: rimossa la versione v4.3.6 -->
   <p>🏹 <strong>Arciere Leggendario</strong> — Creato da <strong>Mr`LoVe</strong></p>
   <p style="margin-top:0.5rem;font-size:0.8rem">Bot: ServiceBot • Gioco IRC • Tutti i diritti riservati</p>
 </footer>
@@ -940,9 +1118,13 @@ for (let i = 0; i < 30; i++) {
 }
 
 // ── CLASSIFICA DATA ──
+// top8: true = mostra top 8 senza premi (vecchio formato)
+// top8: false = mostra top 3 con premi in cascata (nuovo formato da maggio 2026)
+const PREMI = [500, 300, 150];
+
 const classifiche = {
-  "Gennaio 2026":   [],
-  "Febbraio 2026": [
+  "Gennaio 2026":   { top8: true,  giocatori: [] },
+  "Febbraio 2026":  { top8: true,  giocatori: [
     { nick: "astenic4_aspis", pts: 1986, titolo: "🌟 Campione", streak: 5 },
     { nick: "Zanshine",       pts: 1973, titolo: "🌟 Campione", streak: 3 },
     { nick: "Icarus",         pts: 1753, titolo: "🌟 Campione", streak: 0 },
@@ -951,117 +1133,124 @@ const classifiche = {
     { nick: "chiara26_",      pts: 1081, titolo: "🛡️ Veterano",  streak: 0 },
     { nick: "Asia",           pts: 989,  titolo: "⚔️ Guerriero", streak: 0 },
     { nick: "Stregone^",      pts: 518,  titolo: "🎯 Tiratore",  streak: 0 },
-  ],
-  "Marzo 2026":     [
-    { nick: "Zanshine",       pts: 6177, titolo: "💀 Predatore",},
+  ]},
+  "Marzo 2026":     { top8: true,  giocatori: [
+    { nick: "Zanshine",       pts: 6177, titolo: "💀 Predatore" },
     { nick: "Icarus",         pts: 5921, titolo: "💀 Predatore" },
-    { nick: "Patty",          pts: 5457, titolo: "⚡ Mito",  },
-    { nick: "Mr`LoVe",        pts: 5356, titolo: "⚡ Mito",  }, 
-    { nick: "Asia",           pts: 4173, titolo: "⚡ Mito",  }, 
-    { nick: "astenic4_aspis", pts: 2036, titolo: "🌟 Campione", },
-    { nick: "micio_di_casa",  pts: 1572,  titolo: "🌟 Campione",},
-    { nick: "Chiara26_",      pts: 1352,  titolo: "🛡️ Veterano",},    
-  ],
-  "Aprile 2026":    [
-    { nick:🥇 1° Icarus       pts:  13096, titolo: "☄️ Cosmico",},
-    { nick:🥈 2° Zanshine     pts:  11651, titolo: "🌙 Astrale",}, 
-    { nick:🥉 3° Delirio      pts:  11386, titolo: "🌙 Astrale",},
- ],
-  "Maggio 2026":    [],
-  "Giugno 2026":    [],
-  "Luglio 2026":    [],
-  "Agosto 2026":    [],
-  "Settembre 2026": [],
-  "Ottobre 2026":   [],
-  "Novembre 2026":  [],
-  "Dicembre 2026":  [],
+    { nick: "Patty",          pts: 5457, titolo: "⚡ Mito"      },
+    { nick: "Mr`LoVe",        pts: 5356, titolo: "⚡ Mito"      },
+    { nick: "Asia",           pts: 4173, titolo: "⚡ Mito"      },
+    { nick: "astenic4_aspis", pts: 2036, titolo: "🌟 Campione"  },
+    { nick: "micio_di_casa",  pts: 1572, titolo: "🌟 Campione"  },
+    { nick: "Chiara26_",      pts: 1352, titolo: "🛡️ Veterano"  },
+  ]},
+  "Aprile 2026":    { top8: false, giocatori: [
+    { nick: "Icarus",   pts: 13096, titolo: "☄️ Cosmico" },
+    { nick: "Zanshine", pts: 11651, titolo: "🌙 Astrale"  },
+    { nick: "Delirio",  pts: 11386, titolo: "🌙 Astrale"  },
+  ]},
+  "Maggio 2026":    { top8: false, giocatori: [] },
+  "Giugno 2026":    { top8: false, giocatori: [] },
+  "Luglio 2026":    { top8: false, giocatori: [] },
+  "Agosto 2026":    { top8: false, giocatori: [] },
+  "Settembre 2026": { top8: false, giocatori: [] },
+  "Ottobre 2026":   { top8: false, giocatori: [] },
+  "Novembre 2026":  { top8: false, giocatori: [] },
+  "Dicembre 2026":  { top8: false, giocatori: [] },
 };
 
 // ── RENDER CLASSIFICA ──
 const tabsEl = document.getElementById('monthTabs');
 const lbEl = document.getElementById('leaderboards');
 const mesi = Object.keys(classifiche);
+const defaultTab = "Aprile 2026";
 
-if (mesi.length === 0) {
-  lbEl.innerHTML = '<div class="lb-empty">📋 Nessuna classifica disponibile per il momento.<br><em>Torna a fine mese!</em></div>';
-} else {
-  mesi.forEach((mese, idx) => {
-    const tab = document.createElement('button');
-    tab.className = 'month-tab' + (mese === 'Febbraio 2026' ? ' active' : '');
-    tab.textContent = mese;
-    tab.onclick = () => {
-      document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.leaderboard').forEach(l => l.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('lb-' + idx).classList.add('active');
-    };
-    tabsEl.appendChild(tab);
+mesi.forEach((mese, idx) => {
+  const tab = document.createElement('button');
+  tab.className = 'month-tab' + (mese === defaultTab ? ' active' : '');
+  tab.textContent = mese;
+  tab.onclick = () => {
+    document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.leaderboard').forEach(l => l.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('lb-' + idx).classList.add('active');
+  };
+  tabsEl.appendChild(tab);
 
-    const lb = document.createElement('div');
-    lb.className = 'leaderboard' + (mese === 'Febbraio 2026' ? ' active' : '');
-    lb.id = 'lb-' + idx;
+  const lb = document.createElement('div');
+  lb.className = 'leaderboard' + (mese === defaultTab ? ' active' : '');
+  lb.id = 'lb-' + idx;
 
-    const giocatori = classifiche[mese];
-    const top8 = giocatori.slice(0, 8);
+  const { top8, giocatori } = classifiche[mese];
+  const limit = top8 ? 8 : 3;
+  const players = giocatori.slice(0, limit);
 
-    const emptyHtml = '<div class="lb-empty">📋 Classifica non ancora disponibile per questo mese.<br><em>Torna a fine mese!</em></div>';
+  const emptyHtml = '<div class="lb-empty">📋 Classifica non ancora disponibile per questo mese.<br><em>Torna a fine mese!</em></div>';
 
-    lb.innerHTML = '<div class="lb-title">🏆 Top 8 Arcieri</div>' +
-      (top8.length === 0 ? emptyHtml : top8.map((g, i) => {
+  const titleHtml = top8
+    ? '<div class="lb-title">🏆 Top 8 Arcieri</div>'
+    : '<div class="lb-title">🏆 Top 3 Arcieri — Podio Mensile</div>';
+
+  const prizeBannerHtml = !top8
+    ? `<div class="prize-banner">
+        <div class="prize-item"><div class="prize-medal">🥇</div><div class="prize-pts">+500 pts</div><div class="prize-label">1° Posto</div></div>
+        <div class="prize-item"><div class="prize-medal">🥈</div><div class="prize-pts">+300 pts</div><div class="prize-label">2° Posto</div></div>
+        <div class="prize-item"><div class="prize-medal">🥉</div><div class="prize-pts">+150 pts</div><div class="prize-label">3° Posto</div></div>
+      </div>`
+    : '';
+
+  const rowsHtml = players.length === 0
+    ? emptyHtml
+    : players.map((g, i) => {
         const posClass = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🏹';
-        const streakBadge = g.streak >= 3 ? ' 🔥' + g.streak + 'gg' : '';
-        return '<div class="lb-row ' + posClass + '">' +
-          '<div class="lb-pos">' + medal + '</div>' +
-          '<div class="lb-info">' +
-            '<div class="lb-nick">' + g.nick + streakBadge + '</div>' +
-            '<div class="lb-title-text">' + g.titolo + '</div>' +
-          '</div>' +
-          '<div class="lb-pts">' + g.pts.toLocaleString('it-IT') + '<span>punti</span></div>' +
-        '</div>';
-      }).join(''));
+        const streakBadge = (g.streak && g.streak >= 3) ? ' 🔥' + g.streak + 'gg' : '';
+        const prizeHtml = (!top8 && i < 3)
+          ? `<div class="lb-prize">+${PREMI[i].toLocaleString('it-IT')} pts</div>`
+          : '';
+        return `<div class="lb-row ${posClass}">
+          <div class="lb-pos">${medal}</div>
+          <div class="lb-info">
+            <div class="lb-nick">${g.nick}${streakBadge}</div>
+            <div class="lb-title-text">${g.titolo}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem">
+            <div class="lb-pts">${g.pts.toLocaleString('it-IT')}<span>punti</span></div>
+            ${prizeHtml}
+          </div>
+        </div>`;
+      }).join('');
 
-    lbEl.appendChild(lb);
-  });
-}
+  lb.innerHTML = titleHtml + prizeBannerHtml + rowsHtml;
+  lbEl.appendChild(lb);
+});
 
-// ── CONTACT FORM (Formspree) ──
+// ── CONTACT FORM ──
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
-
     const btn = contactForm.querySelector('.contact-btn');
     btn.textContent = '⏳ Invio in corso...';
     btn.disabled = true;
-
-    // Aggiorna il subject dinamicamente
     const tipo    = document.getElementById('cf-type').value;
     const oggetto = document.getElementById('cf-oggetto').value.trim();
-    document.getElementById('fs-subject').value =
-      '[Arciere Leggendario] ' + tipo + ': ' + oggetto;
-
+    document.getElementById('fs-subject').value = '[Arciere Leggendario] ' + tipo + ': ' + oggetto;
     try {
       const data = new FormData(contactForm);
       const resp = await fetch(contactForm.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
+        method: 'POST', body: data, headers: { 'Accept': 'application/json' }
       });
-
       if (resp.ok) {
         contactForm.reset();
         document.getElementById('contactSuccess').style.display = 'block';
-        setTimeout(() => {
-          document.getElementById('contactSuccess').style.display = 'none';
-        }, 7000);
+        setTimeout(() => { document.getElementById('contactSuccess').style.display = 'none'; }, 7000);
       } else {
         alert('❌ Errore nell\'invio. Riprova tra qualche istante.');
       }
     } catch(err) {
       alert('❌ Connessione fallita. Controlla la tua rete e riprova.');
     }
-
     btn.textContent = '⚔️ Invia Segnalazione';
     btn.disabled = false;
   });
@@ -1086,7 +1275,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.cmd-card, .item-card, .title-row, .rule-item, .lb-row').forEach(el => {
+document.querySelectorAll('.cmd-card, .item-card, .market-card, .title-row, .rule-item, .lb-row').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
