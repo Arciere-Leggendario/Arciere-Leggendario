@@ -20,6 +20,8 @@
     --text: #e8d5a3;
     --text-dim: #9a8060;
     --glow: rgba(201, 168, 76, 0.4);
+    --coin: #f5c842;
+    --coin-dark: #b8941e;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -243,18 +245,26 @@
   .item-effect { color: var(--parchment-dark); font-size: 0.9rem; line-height: 1.5; }
   .item-tags { display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem; }
   .item-rarity { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.5rem; display: inline-block; }
-  .item-market-tag { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.2rem 0.5rem; display: inline-block; color: #5b9bd5; border: 1px solid #2980b9; }
+  .item-market-tag { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.2rem 0.5rem; display: inline-block; color: var(--coin); border: 1px solid var(--coin-dark); }
   .rarity-comune { color: #aaa; border: 1px solid #555; }
   .rarity-non-comune { color: #5b9bd5; border: 1px solid #2980b9; }
   .rarity-raro { color: #a855f7; border: 1px solid #7c3aed; }
   .rarity-epico { color: var(--gold); border: 1px solid var(--gold-dark); }
   .rarity-leggendario { color: var(--crimson-light); border: 1px solid var(--crimson); }
 
+  /* Coin badge */
+  .coin-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-family: 'Cinzel', serif; font-size: 0.75rem;
+    color: var(--coin); background: rgba(245,200,66,0.08);
+    border: 1px solid rgba(245,200,66,0.3); padding: 0.15rem 0.5rem;
+  }
+
   /* Market section */
   .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
   .market-card { background: var(--bg-card); border: 1px solid rgba(42,80,150,0.3); padding: 1.2rem; text-align: center; transition: all 0.3s; position: relative; }
-  .market-card:hover { border-color: rgba(42,80,150,0.7); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
-  .market-price { font-family: 'Cinzel Decorative', cursive; font-size: 1.3rem; color: var(--gold); font-weight: 700; margin: 0.5rem 0; }
+  .market-card:hover { border-color: rgba(245,200,66,0.4); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+  .market-price { font-family: 'Cinzel Decorative', cursive; font-size: 1.3rem; color: var(--coin); font-weight: 700; margin: 0.5rem 0; }
   .market-price span { font-size: 0.75rem; color: var(--text-dim); font-family: 'Cinzel', serif; display: block; }
 
   .titles-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.8rem; }
@@ -502,7 +512,7 @@
     <div class="cmd-card">
       <div class="cmd-name">🏹 Freccia</div>
       <div class="cmd-syntax">!freccia</div>
-      <div class="cmd-desc">Scocca una freccia verso il bersaglio. Cooldown di <strong>5 minuti</strong> tra un tiro e l'altro. Ad ogni tiro hai il <strong>45%</strong> di probabilità di trovare un oggetto, e il <strong>5%</strong> di ottenere un giro extra immediato.</div>
+      <div class="cmd-desc">Scocca una freccia verso il bersaglio. Cooldown di <strong>10 minuti</strong> tra un tiro e l'altro. Ad ogni tiro hai il <strong>45%</strong> di probabilità di trovare un oggetto, e il <strong>5%</strong> di ottenere un giro extra immediato. Guadagni anche <strong>🪙 Coin</strong> ad ogni tiro!</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">🎒 Usa Oggetto</div>
@@ -517,7 +527,12 @@
     <div class="cmd-card">
       <div class="cmd-name">📊 Profilo</div>
       <div class="cmd-syntax">!profilo [nick]</div>
-      <div class="cmd-desc">Statistiche complete: punti, EXP, titolo, tiri, sfide vinte/perse, streak giornaliera e cooldown. In <em>notice privato</em>.</div>
+      <div class="cmd-desc">Statistiche complete: punti, EXP, titolo, tiri, sfide vinte/perse, streak giornaliera, saldo 🪙 Coin e cooldown. In <em>notice privato</em>.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">🪙 Coin</div>
+      <div class="cmd-syntax">!coin [nick]</div>
+      <div class="cmd-desc">Mostra il saldo di 🪙 Coin tuoi (o di un altro giocatore). I Coin si guadagnano tirando e vincendo sfide, e si spendono al <strong>Market</strong>.</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">🏆 Classifica</div>
@@ -525,9 +540,19 @@
       <div class="cmd-desc">Mostra i top 8 arcieri per <strong>punti</strong>. In caso di pari punti, i giocatori compaiono sulla stessa riga.</div>
     </div>
     <div class="cmd-card">
+      <div class="cmd-name">🏆 Top 5</div>
+      <div class="cmd-syntax">!top5</div>
+      <div class="cmd-desc">Mostra i top <strong>5 arcieri</strong> per punti — formato compatto, utile per una panoramica rapida del podio.</div>
+    </div>
+    <div class="cmd-card">
       <div class="cmd-name">🌟 Classifica EXP</div>
       <div class="cmd-syntax">!top exp</div>
       <div class="cmd-desc">Mostra i top 8 arcieri per <strong>EXP</strong> — l'esperienza accumulata che determina il titolo.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">📅 Classifica Settimanale</div>
+      <div class="cmd-syntax">!top7</div>
+      <div class="cmd-desc">Mostra la classifica della settimana corrente in <strong>tempo reale</strong>: i punti guadagnati solo in questa settimana. In <em>notice privato</em>.</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">🎯 La Mia Posizione</div>
@@ -550,34 +575,39 @@
       <div class="cmd-desc">Rifiuta una sfida ricevuta. Attenzione: rifiutare <strong>3 sfide valide</strong> (posta ≤ 50 pts) provoca un malus automatico di <strong>−50 pts</strong>!</div>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">🔄 Scambio Oggetti <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-name">🔄 Scambio Oggetti</div>
       <div class="cmd-syntax">!scambia &lt;nick&gt; &lt;oggetto_offerto&gt; &lt;oggetto_voluto&gt;</div>
       <div class="cmd-desc">Proponi uno scambio bilaterale di oggetti a un altro giocatore. La proposta scade in <strong>2 minuti</strong>. L'oggetto offerto viene messo in garanzia finché non c'è risposta.</div>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">✅ Accetta Scambio <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-name">✅ Accetta Scambio</div>
       <div class="cmd-syntax">!accettascambio</div>
       <div class="cmd-desc">Accetta uno scambio di oggetti ricevuto. Entrambi i giocatori devono avere l'oggetto richiesto e il slot libero nell'inventario.</div>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">🚫 Rifiuta Scambio <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-name">🚫 Rifiuta Scambio</div>
       <div class="cmd-syntax">!rifiutascambio</div>
       <div class="cmd-desc">Rifiuta uno scambio ricevuto. L'oggetto messo in garanzia dall'offerente viene restituito automaticamente.</div>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">🏪 Market <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-name">🏪 Market</div>
       <div class="cmd-syntax">!market</div>
-      <div class="cmd-desc">Mostra il listino del negozio in <em>notice privato</em>: puoi acquistare oggetti spendendo i tuoi punti, senza aspettare il drop casuale.</div>
+      <div class="cmd-desc">Mostra il listino del negozio in <em>notice privato</em>: puoi acquistare oggetti spendendo i tuoi <strong>🪙 Coin</strong>, la valuta interna del gioco distinta dai punti classifica.</div>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">🛒 Compra <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-name">🛒 Compra</div>
       <div class="cmd-syntax">!compra &lt;oggetto&gt;</div>
-      <div class="cmd-desc">Acquista un oggetto dal market usando i tuoi punti. Il costo viene scalato immediatamente. Inventario max 5 per tipo.</div>
+      <div class="cmd-desc">Acquista un oggetto dal market usando i tuoi <strong>🪙 Coin</strong>. Il costo viene scalato immediatamente. Inventario max 5 per tipo.</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">🏛️ Hall of Fame</div>
       <div class="cmd-syntax">!hof</div>
-      <div class="cmd-desc">Mostra la Hall of Fame storica con i top 3 di ogni mese precedente.</div>
+      <div class="cmd-desc">Mostra la Hall of Fame storica con i top 8 di ogni mese precedente.</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">📅 HOF Settimanale <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-syntax">!hof7</div>
+      <div class="cmd-desc">Mostra la Hall of Fame settimanale con le ultime 4 settimane — i top arcieri per punti guadagnati nella singola settimana. In <em>notice privato</em>.</div>
     </div>
     <div class="cmd-card">
       <div class="cmd-name">📈 Statistiche</div>
@@ -682,12 +712,20 @@
       <div class="cmd-desc">Gioca ogni giorno senza saltarne uno. Ogni giorno consecutivo aggiunge <strong>+5% EXP</strong> (massimo +50%). Si azzera se salti un giorno.</div>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">🎲 Giro Extra <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-name">🎲 Giro Extra</div>
       <div class="cmd-desc">Ad ogni <code style="color:var(--crimson-light)">!freccia</code> hai il <strong>5% di probabilità</strong> di ottenere un giro extra: puoi tirare di nuovo senza aspettare il cooldown! Puoi accumularne al massimo <strong>2</strong>.</div>
     </div>
     <div class="cmd-card">
+      <div class="cmd-name">🪙 Sistema Coin <span class="new-badge">Nuovo</span></div>
+      <div class="cmd-desc">Ad ogni tiro guadagni <strong>+5 🪙</strong> (o +10 se non fai freccia spezzata). Hai il <strong>15% di chance</strong> di trovare una borsa bonus da 5–15 🪙. I Coin non si perdono mai e si usano al <strong>Market</strong>.</div>
+    </div>
+    <div class="cmd-card">
       <div class="cmd-name">⚡ Oggetti sulle Sfide</div>
-      <div class="cmd-desc">Prima di <code style="color:var(--crimson-light)">!accetta</code> puoi attivare <strong>☠️ Veleno</strong> (−3 al tiro avversario) o <strong>🪞 Specchio</strong> (riflette un mancato). Il vincitore ha il <strong>55%</strong> di chance di trovare un oggetto!</div>
+      <div class="cmd-desc">Prima di <code style="color:var(--crimson-light)">!accetta</code> puoi attivare <strong>☠️ Veleno</strong> (−3 al tiro avversario), <strong>🪞 Specchio</strong> (riflette un mancato) o <strong>🧪 Pozione</strong> (annulla il Veleno avversario). Il vincitore ha il <strong>55%</strong> di chance di trovare un oggetto!</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">📅 Classifica Settimanale</div>
+      <div class="cmd-desc">Ogni settimana si accumula una classifica separata basata sui punti guadagnati in quella settimana. Usa <code style="color:var(--crimson-light)">!top7</code> per vederla live e <code style="color:var(--crimson-light)">!hof7</code> per lo storico. Non prevede premi automatici — solo gloria!</div>
     </div>
   </div>
 </section>
@@ -705,7 +743,7 @@
   </div>
   <p style="text-align:center;color:var(--text-dim);margin-bottom:2rem;font-style:italic;">
     Ad ogni <code style="color:var(--crimson-light)">!freccia</code> hai il <strong>45%</strong> di trovare un oggetto casuale. Puoi tenerne massimo 5 per tipo.<br>
-    Alcuni oggetti sono acquistabili anche al <a href="#market" style="color:var(--gold);text-decoration:none;">🏪 Market</a> con i tuoi punti.
+    Alcuni oggetti sono acquistabili anche al <a href="#market" style="color:var(--gold);text-decoration:none;">🏪 Market</a> con i tuoi <strong>🪙 Coin</strong>.
   </p>
 
   <div class="items-grid">
@@ -715,7 +753,7 @@
       <div class="item-effect">Blocca la prossima freccia spezzata. Si consuma dopo un utilizzo.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-comune">Comune • 18%</span>
-        <span class="item-market-tag">🏪 25 pts</span>
+        <span class="item-market-tag">🪙 25 Coin</span>
       </div>
     </div>
     <div class="item-card">
@@ -724,16 +762,16 @@
       <div class="item-effect">Garantisce un risultato minimo di <strong>5 punti</strong> al prossimo tiro.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-comune">Comune • 14%</span>
-        <span class="item-market-tag">🏪 20 pts</span>
+        <span class="item-market-tag">🪙 20 Coin</span>
       </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">⚡</div>
       <div class="item-name">Freccia Fulmine</div>
-      <div class="item-effect">Il prossimo <code>!freccia</code> <strong>ignora il cooldown</strong> di 5 minuti. Tira subito!</div>
+      <div class="item-effect">Il prossimo <code>!freccia</code> <strong>ignora il cooldown</strong> di 10 minuti. Tira subito!</div>
       <div class="item-tags">
         <span class="item-rarity rarity-non-comune">Non Comune • 12%</span>
-        <span class="item-market-tag">🏪 35 pts</span>
+        <span class="item-market-tag">🪙 35 Coin</span>
       </div>
     </div>
     <div class="item-card">
@@ -742,7 +780,7 @@
       <div class="item-effect">Moltiplica i punti del prossimo tiro per <strong>×2</strong>.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-non-comune">Non Comune • 11%</span>
-        <span class="item-market-tag">🏪 60 pts</span>
+        <span class="item-market-tag">🪙 40 Coin</span>
       </div>
     </div>
     <div class="item-card">
@@ -751,39 +789,48 @@
       <div class="item-effect">Protegge dai malus per i prossimi <strong>3 tiri</strong> consecutivi.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-non-comune">Non Comune • 9%</span>
-        <span class="item-market-tag">🏪 45 pts</span>
+        <span class="item-market-tag">🪙 45 Coin</span>
       </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">🥈</div>
       <div class="item-name">Freccia d'Argento</div>
-      <div class="item-effect">Moltiplica i punti del prossimo tiro per <strong>×2</strong>.</div>
+      <div class="item-effect">Moltiplica i punti del prossimo tiro per <strong>×2.5</strong>.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-raro">Raro • 8%</span>
-        <span class="item-market-tag">🏪 55 pts</span>
+        <span class="item-market-tag">🪙 55 Coin</span>
       </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">☠️</div>
-      <div class="item-name">Veleno <span class="new-badge">Nuovo</span></div>
+      <div class="item-name">Veleno</div>
       <div class="item-effect">Nella prossima <strong>sfida</strong>, riduce di <strong>3 punti</strong> il tiro dell'avversario. Usa <code>!usa veleno</code> prima di <code>!accetta</code>.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-raro">Raro • 8%</span>
-        <span class="item-market-tag">🏪 70 pts</span>
+        <span class="item-market-tag">🪙 70 Coin</span>
       </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">🪞</div>
-      <div class="item-name">Specchio <span class="new-badge">Nuovo</span></div>
+      <div class="item-name">Specchio</div>
       <div class="item-effect">Nella prossima <strong>sfida</strong>, se l'avversario fa "mancato", il malus si <strong>riflette</strong> su di lui. Usa <code>!usa specchio</code> prima di <code>!accetta</code>.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-raro">Raro • 7%</span>
-        <span class="item-market-tag">🏪 65 pts</span>
+        <span class="item-market-tag">🪙 65 Coin</span>
+      </div>
+    </div>
+    <div class="item-card">
+      <div class="item-emoji">🧪</div>
+      <div class="item-name">Pozione <span class="new-badge">Nuovo</span></div>
+      <div class="item-effect">Nella prossima <strong>sfida</strong>, <strong>annulla il Veleno</strong> avversario. Usa <code>!usa pozione</code> prima di <code>!accetta</code>. Solo dal Market.</div>
+      <div class="item-tags">
+        <span class="item-rarity rarity-raro">Raro</span>
+        <span class="item-market-tag">🪙 30 Coin</span>
       </div>
     </div>
     <div class="item-card">
       <div class="item-emoji">💎</div>
-      <div class="item-name">Cristallo <span class="new-badge">Nuovo</span></div>
+      <div class="item-name">Cristallo</div>
       <div class="item-effect">Garantisce un risultato minimo di <strong>8 punti</strong> al prossimo tiro. Solo da drop, non disponibile al market.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-epico">Epico • 6%</span>
@@ -792,7 +839,7 @@
     </div>
     <div class="item-card">
       <div class="item-emoji">⭐</div>
-      <div class="item-name">Stelle <span class="new-badge">Nuovo</span></div>
+      <div class="item-name">Stelle</div>
       <div class="item-effect">Il prossimo tiro guadagna un <strong>+50% EXP</strong> aggiuntivo. Solo da drop, non disponibile al market.</div>
       <div class="item-tags">
         <span class="item-rarity rarity-epico">Epico • 4%</span>
@@ -815,65 +862,77 @@
 <div class="sep">🏪 · · · · · 🏪</div>
 
 <!-- MARKET -->
-<div class="full-section" id="market" style="background:linear-gradient(180deg,transparent,rgba(42,80,150,0.04),transparent);border-top:1px solid rgba(42,80,150,0.15);border-bottom:1px solid rgba(42,80,150,0.15);">
+<div class="full-section" id="market" style="background:linear-gradient(180deg,transparent,rgba(42,80,150,0.04),transparent);border-top:1px solid rgba(245,200,66,0.12);border-bottom:1px solid rgba(245,200,66,0.12);">
 <section>
   <div class="section-header">
-    <p class="section-label">Negozio — Nuovo</p>
+    <p class="section-label">Negozio — Valuta: 🪙 Coin</p>
     <h2 class="section-title">🏪 Market</h2>
     <div class="section-line"></div>
   </div>
   <p style="text-align:center;color:var(--text-dim);margin-bottom:2rem;font-style:italic;">
-    Non vuoi aspettare il drop? Acquista oggetti direttamente con i tuoi punti usando <code style="color:var(--crimson-light)">!market</code> per il listino e <code style="color:var(--crimson-light)">!compra &lt;oggetto&gt;</code> per acquistare.<br>
-    Oro, Cristallo e Stelle sono <strong>solo da drop casuale</strong> e non disponibili al market.
+    Non vuoi aspettare il drop? Acquista oggetti con i tuoi <strong>🪙 Coin</strong> guadagnati giocando. Usa <code style="color:var(--crimson-light)">!market</code> per il listino e <code style="color:var(--crimson-light)">!compra &lt;oggetto&gt;</code> per acquistare.<br>
+    I <strong>Coin sono separati dai punti classifica</strong>: spendere Coin non influenza la tua posizione. Oro, Cristallo e Stelle sono <strong>solo da drop casuale</strong>.
   </p>
+
+  <div style="text-align:center;margin-bottom:1.5rem;">
+    <span class="coin-badge" style="font-size:0.9rem;padding:0.4rem 1rem;">
+      🪙 Come guadagnare Coin: +5 per tiro • +10 tiro valido • 15% borsa bonus 5–15 🪙 • sfida vinta = 🪙 pari alla posta
+    </span>
+  </div>
 
   <div class="market-grid">
     <div class="market-card">
       <div style="font-size:2rem">🥉</div>
       <div class="item-name">Freccia di Bronzo</div>
-      <div class="market-price">20 <span>punti</span></div>
+      <div class="market-price">20 <span>🪙 Coin</span></div>
       <div class="item-effect">Prossimo tiro min 5 pts</div>
     </div>
     <div class="market-card">
       <div style="font-size:2rem">🛡️</div>
       <div class="item-name">Scudo Anti-Malus</div>
-      <div class="market-price">25 <span>punti</span></div>
+      <div class="market-price">25 <span>🪙 Coin</span></div>
       <div class="item-effect">Blocca prossima freccia spezzata</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">🧪</div>
+      <div class="item-name">Pozione <span class="new-badge">Nuovo</span></div>
+      <div class="market-price">30 <span>🪙 Coin</span></div>
+      <div class="item-effect">Sfida: annulla il Veleno avversario</div>
     </div>
     <div class="market-card">
       <div style="font-size:2rem">⚡</div>
       <div class="item-name">Freccia Fulmine</div>
-      <div class="market-price">35 <span>punti</span></div>
-      <div class="item-effect">Salta il cooldown di 5 min</div>
+      <div class="market-price">35 <span>🪙 Coin</span></div>
+      <div class="item-effect">Salta il cooldown di 10 min</div>
+    </div>
+    <div class="market-card">
+      <div style="font-size:2rem">🔥</div>
+      <div class="item-name">Freccia di Fuoco</div>
+      <div class="market-price">40 <span>🪙 Coin</span></div>
+      <div class="item-effect">Prossimo tiro ×2</div>
     </div>
     <div class="market-card">
       <div style="font-size:2rem">🍀</div>
       <div class="item-name">Amuleto Fortuna</div>
-      <div class="market-price">45 <span>punti</span></div>
+      <div class="market-price">45 <span>🪙 Coin</span></div>
       <div class="item-effect">3 tiri protetti da malus</div>
     </div>
     <div class="market-card">
       <div style="font-size:2rem">🥈</div>
       <div class="item-name">Freccia d'Argento</div>
-      <div class="market-price">55 <span>punti</span></div>
-      <div class="item-effect">Prossimo tiro ×2</div>
-    </div>
-    <div class="market-card">
-      <div style="font-size:2rem">🔥</div>
-      <div class="item-name">Freccia di Fuoco</div>
-      <div class="market-price">60 <span>punti</span></div>
-      <div class="item-effect">Prossimo tiro ×2</div>
+      <div class="market-price">55 <span>🪙 Coin</span></div>
+      <div class="item-effect">Prossimo tiro ×2.5</div>
     </div>
     <div class="market-card">
       <div style="font-size:2rem">🪞</div>
       <div class="item-name">Specchio</div>
-      <div class="market-price">65 <span>punti</span></div>
-      <div class="item-effect">Sfida: riflette mancato avversario</div>
+      <div class="market-price">65 <span>🪙 Coin</span></div>
+      <div class="item-effect">Sfida: riflette il mancato avversario</div>
     </div>
     <div class="market-card">
       <div style="font-size:2rem">☠️</div>
       <div class="item-name">Veleno</div>
-      <div class="market-price">70 <span>punti</span></div>
+      <div class="market-price">70 <span>🪙 Coin</span></div>
       <div class="item-effect">Sfida: −3 al tiro avversario</div>
     </div>
   </div>
@@ -948,7 +1007,7 @@
   <div class="rules-list">
     <div class="rule-item">
       <span class="rule-num">I</span>
-      <span class="rule-text"><strong>Rispetta i tempi di cooldown.</strong> Ogni arciere ha diritto a un tiro ogni 5 minuti. La Freccia Fulmine o un Giro Extra sono gli unici modi per bypassare questo limite.</span>
+      <span class="rule-text"><strong>Rispetta i tempi di cooldown.</strong> Ogni arciere ha diritto a un tiro ogni 10 minuti. La Freccia Fulmine o un Giro Extra sono gli unici modi per bypassare questo limite.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">II</span>
@@ -976,10 +1035,14 @@
     </div>
     <div class="rule-item">
       <span class="rule-num">VIII</span>
-      <span class="rule-text"><strong>Hall of Fame mensile e premi.</strong> Il primo di ogni mese i top 3 vengono immortalati nella Hall of Fame. Da Maggio 2026 i top 3 ricevono anche premi in punti: <strong>500 pts al 1°, 300 pts al 2°, 150 pts al 3°</strong>.</span>
+      <span class="rule-text"><strong>Hall of Fame mensile e premi.</strong> Il primo di ogni mese i top 8 vengono immortalati nella Hall of Fame. Da Maggio 2026 i top 3 ricevono anche premi in punti: <strong>500 pts al 1°, 300 pts al 2°, 150 pts al 3°</strong>.</span>
     </div>
     <div class="rule-item">
       <span class="rule-num">IX</span>
+      <span class="rule-text"><strong>Classifica settimanale.</strong> Ogni settimana si tiene una classifica parallela dei punti guadagnati. Puoi monitorarla con <strong>!top7</strong> e consultare lo storico con <strong>!hof7</strong>. Non comporta premi automatici, solo gloria!</span>
+    </div>
+    <div class="rule-item">
+      <span class="rule-num">X</span>
       <span class="rule-text"><strong>Comportamento corretto.</strong> Nessun flood di comandi, nessun tentativo di abusare del bot. Gli admin si riservano il diritto di correggere i dati in caso di anomalie.</span>
     </div>
   </div>
@@ -1118,8 +1181,6 @@ for (let i = 0; i < 30; i++) {
 }
 
 // ── CLASSIFICA DATA ──
-// top8: true = mostra top 8 senza premi (vecchio formato)
-// top8: false = mostra top 3 con premi in cascata (nuovo formato da maggio 2026)
 const PREMI = [500, 300, 150];
 
 const classifiche = {
@@ -1149,7 +1210,11 @@ const classifiche = {
     { nick: "Zanshine", pts: 11651, titolo: "🌙 Astrale"  },
     { nick: "Delirio",  pts: 11386, titolo: "🌙 Astrale"  },
   ]},
-  "Maggio 2026":    { top8: false, giocatori: [] },
+  "Maggio 2026":    { top8: false, giocatori: [
+    { nick: "Icarus",   pts: 25071, titolo: "👑 Cupido Immortale" },
+    { nick: "Delirio",  pts: 23300, titolo: "👑 Cupido Immortale" },
+    { nick: "Zanshine", pts: 20822, titolo: "🌌 Galattico"        },
+  ]},
   "Giugno 2026":    { top8: false, giocatori: [] },
   "Luglio 2026":    { top8: false, giocatori: [] },
   "Agosto 2026":    { top8: false, giocatori: [] },
@@ -1163,7 +1228,7 @@ const classifiche = {
 const tabsEl = document.getElementById('monthTabs');
 const lbEl = document.getElementById('leaderboards');
 const mesi = Object.keys(classifiche);
-const defaultTab = "Aprile 2026";
+const defaultTab = "Maggio 2026";
 
 mesi.forEach((mese, idx) => {
   const tab = document.createElement('button');
