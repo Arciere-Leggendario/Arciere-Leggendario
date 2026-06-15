@@ -1,21 +1,9 @@
 {
-  "aggiornato": "15/06/2026 15:05:01",
-  "ts": 1781528701,
+  "aggiornato": "15/06/2026 15:10:01",
+  "ts": 1781529001,
   "classifica_live": [
     {
       "pos": 1,
-      "nick": "mr`love",
-      "pts": 30802,
-      "exp": 17221,
-      "titolo": "👑 Cupido Immortale",
-      "tiri": 278,
-      "wins": 65,
-      "losses": 55,
-      "streak": 3,
-      "coins": 128
-    },
-    {
-      "pos": 2,
       "nick": "icarus",
       "pts": 29391,
       "exp": 15065,
@@ -27,7 +15,7 @@
       "coins": 649
     },
     {
-      "pos": 3,
+      "pos": 2,
       "nick": "delirio",
       "pts": 27911,
       "exp": 13751,
@@ -39,7 +27,7 @@
       "coins": 1457
     },
     {
-      "pos": 4,
+      "pos": 3,
       "nick": "zanshine",
       "pts": 23258,
       "exp": 11191,
@@ -51,7 +39,7 @@
       "coins": 2984
     },
     {
-      "pos": 5,
+      "pos": 4,
       "nick": "cappellaio_gatto",
       "pts": 21710,
       "exp": 15340,
@@ -63,7 +51,7 @@
       "coins": 115
     },
     {
-      "pos": 6,
+      "pos": 5,
       "nick": "orsettopappatoredimieleconleapi",
       "pts": 19633,
       "exp": 9403,
@@ -75,7 +63,7 @@
       "coins": 2925
     },
     {
-      "pos": 7,
+      "pos": 6,
       "nick": "guest12179",
       "pts": 12499,
       "exp": 5780,
@@ -87,7 +75,7 @@
       "coins": 1502
     },
     {
-      "pos": 8,
+      "pos": 7,
       "nick": "patty",
       "pts": 8201,
       "exp": 3811,
@@ -97,6 +85,18 @@
       "losses": 15,
       "streak": 6,
       "coins": 717
+    },
+    {
+      "pos": 8,
+      "nick": "micio_di_casa",
+      "pts": 7708,
+      "exp": 3682,
+      "titolo": "👁️ Ombra",
+      "tiri": 673,
+      "wins": 5,
+      "losses": 4,
+      "streak": 8,
+      "coins": 2029
     }
   ],
   "classifica_settimanale": {
@@ -244,7 +244,7 @@
     }
   ],
   "statistiche": {
-    "giocatori": 85,
+    "giocatori": 84,
     "tiri_totali": 15743,
     "punti_totali": 211495,
     "sfide_totali": 392,
