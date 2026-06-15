@@ -1,6 +1,6 @@
 {
-  "aggiornato": "15/06/2026 14:55:01",
-  "ts": 1781528101,
+  "aggiornato": "15/06/2026 15:00:01",
+  "ts": 1781528401,
   "classifica_live": [
     {
       "pos": 1,
@@ -119,7 +119,7 @@
       {
         "pos": 3,
         "nick": "rossella0402",
-        "pts": 128,
+        "pts": 133,
         "titolo": "⚡ Mito"
       },
       {
@@ -245,9 +245,9 @@
   ],
   "statistiche": {
     "giocatori": 85,
-    "tiri_totali": 15741,
-    "punti_totali": 211484,
+    "tiri_totali": 15742,
+    "punti_totali": 211489,
     "sfide_totali": 392,
-    "oggetti_giro": 571
+    "oggetti_giro": 570
   }
 }
