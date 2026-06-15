@@ -1,6 +1,6 @@
 {
-  "aggiornato": "15/06/2026 14:35:01",
-  "ts": 1781526901,
+  "aggiornato": "15/06/2026 14:40:01",
+  "ts": 1781527201,
   "classifica_live": [
     {
       "pos": 1,
@@ -53,18 +53,18 @@
     {
       "pos": 5,
       "nick": "cappellaio_gatto",
-      "pts": 21652,
-      "exp": 15309,
+      "pts": 21655,
+      "exp": 15310,
       "titolo": "👑 Cupido Immortale",
-      "tiri": 1608,
+      "tiri": 1609,
       "wins": 44,
       "losses": 24,
       "streak": 35,
-      "coins": 135
+      "coins": 145
     },
     {
       "pos": 6,
-      "nick": "maremmano",
+      "nick": "bhoooo",
       "pts": 19621,
       "exp": 9394,
       "titolo": "🌌 Galattico",
@@ -107,7 +107,7 @@
       {
         "pos": 1,
         "nick": "cappellaio_gatto",
-        "pts": 1942,
+        "pts": 1945,
         "titolo": "👑 Cupido Immortale"
       },
       {
@@ -132,7 +132,7 @@
         "pos": 5,
         "nick": "maremmano",
         "pts": 108,
-        "titolo": "🌌 Galattico"
+        "titolo": "🌱 Novizio"
       },
       {
         "pos": 6,
@@ -239,8 +239,8 @@
   ],
   "statistiche": {
     "giocatori": 85,
-    "tiri_totali": 15736,
-    "punti_totali": 211395,
+    "tiri_totali": 15737,
+    "punti_totali": 211398,
     "sfide_totali": 392,
     "oggetti_giro": 569
   }
