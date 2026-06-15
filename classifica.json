@@ -1,6 +1,6 @@
 {
-  "aggiornato": "15/06/2026 15:14:14",
-  "ts": 1781529254,
+  "aggiornato": "15/06/2026 15:15:01",
+  "ts": 1781529301,
   "classifica_live": [
     {
       "pos": 1,
@@ -136,15 +136,15 @@
       },
       {
         "pos": 6,
-        "nick": "nabellafregatura",
-        "pts": 33,
-        "titolo": "🛡️ Veterano"
+        "nick": "polveredistelle",
+        "pts": 37,
+        "titolo": "👁️ Ombra"
       },
       {
         "pos": 7,
-        "nick": "polveredistelle",
-        "pts": 31,
-        "titolo": "👁️ Ombra"
+        "nick": "nabellafregatura",
+        "pts": 33,
+        "titolo": "🛡️ Veterano"
       },
       {
         "pos": 8,
@@ -245,8 +245,8 @@
   ],
   "statistiche": {
     "giocatori": 84,
-    "tiri_totali": 15745,
-    "punti_totali": 211513,
+    "tiri_totali": 15746,
+    "punti_totali": 211519,
     "sfide_totali": 392,
     "oggetti_giro": 571
   }
