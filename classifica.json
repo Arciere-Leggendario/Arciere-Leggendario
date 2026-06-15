@@ -1,0 +1,247 @@
+{
+  "aggiornato": "15/06/2026 14:10:57",
+  "ts": 1781525457,
+  "classifica_live": [
+    {
+      "pos": 1,
+      "nick": "mr`love",
+      "pts": 30802,
+      "exp": 17221,
+      "titolo": "👑 Cupido Immortale",
+      "tiri": 278,
+      "wins": 65,
+      "losses": 55,
+      "streak": 3,
+      "coins": 128
+    },
+    {
+      "pos": 2,
+      "nick": "icarus",
+      "pts": 29391,
+      "exp": 15065,
+      "titolo": "👑 Cupido Immortale",
+      "tiri": 2861,
+      "wins": 77,
+      "losses": 55,
+      "streak": 56,
+      "coins": 649
+    },
+    {
+      "pos": 3,
+      "nick": "delirio",
+      "pts": 27907,
+      "exp": 13749,
+      "titolo": "👑 Cupido Immortale",
+      "tiri": 2140,
+      "wins": 49,
+      "losses": 56,
+      "streak": 8,
+      "coins": 1437
+    },
+    {
+      "pos": 4,
+      "nick": "zanshine",
+      "pts": 23258,
+      "exp": 11191,
+      "titolo": "👑 Cupido Immortale",
+      "tiri": 2386,
+      "wins": 66,
+      "losses": 84,
+      "streak": 55,
+      "coins": 2984
+    },
+    {
+      "pos": 5,
+      "nick": "cappellaio_gatto",
+      "pts": 21635,
+      "exp": 15303,
+      "titolo": "👑 Cupido Immortale",
+      "tiri": 1606,
+      "wins": 44,
+      "losses": 24,
+      "streak": 35,
+      "coins": 103
+    },
+    {
+      "pos": 6,
+      "nick": "maremmano",
+      "pts": 19566,
+      "exp": 9367,
+      "titolo": "🌌 Galattico",
+      "tiri": 1674,
+      "wins": 0,
+      "losses": 2,
+      "streak": 46,
+      "coins": 2975
+    },
+    {
+      "pos": 7,
+      "nick": "guest12179",
+      "pts": 12499,
+      "exp": 5780,
+      "titolo": "🌙 Astrale",
+      "tiri": 1175,
+      "wins": 36,
+      "losses": 36,
+      "streak": 8,
+      "coins": 1502
+    },
+    {
+      "pos": 8,
+      "nick": "patty",
+      "pts": 8201,
+      "exp": 3811,
+      "titolo": "👁️ Ombra",
+      "tiri": 624,
+      "wins": 8,
+      "losses": 15,
+      "streak": 6,
+      "coins": 717
+    }
+  ],
+  "classifica_settimanale": {
+    "week_key": 202625,
+    "anno": 2026,
+    "settimana": 25,
+    "giocatori": [
+      {
+        "pos": 1,
+        "nick": "cappellaio_gatto",
+        "pts": 1925,
+        "titolo": "👑 Cupido Immortale"
+      },
+      {
+        "pos": 2,
+        "nick": "delirio",
+        "pts": 300,
+        "titolo": "👑 Cupido Immortale"
+      },
+      {
+        "pos": 3,
+        "nick": "icarus",
+        "pts": 115,
+        "titolo": "👑 Cupido Immortale"
+      },
+      {
+        "pos": 4,
+        "nick": "rossella0402",
+        "pts": 103,
+        "titolo": "⚡ Mito"
+      },
+      {
+        "pos": 5,
+        "nick": "maremmano",
+        "pts": 53,
+        "titolo": "🌌 Galattico"
+      },
+      {
+        "pos": 6,
+        "nick": "nabellafregatura",
+        "pts": 33,
+        "titolo": "🛡️ Veterano"
+      },
+      {
+        "pos": 7,
+        "nick": "polveredistelle",
+        "pts": 6,
+        "titolo": "👁️ Ombra"
+      }
+    ]
+  },
+  "hof_mensile": [
+    {
+      "mese_key": 202605,
+      "label": "Maggio 2026",
+      "anno": 2026,
+      "mese": 5,
+      "giocatori": [
+        {
+          "pos": 1,
+          "nick": "icarus",
+          "pts": 25071,
+          "exp": 12582,
+          "titolo": "👑 Cupido Immortale"
+        },
+        {
+          "pos": 2,
+          "nick": "delirio",
+          "pts": 23300,
+          "exp": 11541,
+          "titolo": "👑 Cupido Immortale"
+        },
+        {
+          "pos": 3,
+          "nick": "zanshine",
+          "pts": 20822,
+          "exp": 9815,
+          "titolo": "🌌 Galattico"
+        }
+      ]
+    },
+    {
+      "mese_key": 202604,
+      "label": "Aprile 2026",
+      "anno": 2026,
+      "mese": 4,
+      "giocatori": [
+        {
+          "pos": 1,
+          "nick": "icarus",
+          "pts": 13096,
+          "exp": 6039,
+          "titolo": "☄️ Cosmico"
+        },
+        {
+          "pos": 2,
+          "nick": "zanshine",
+          "pts": 11651,
+          "exp": 5478,
+          "titolo": "🌙 Astrale"
+        },
+        {
+          "pos": 3,
+          "nick": "delirio",
+          "pts": 11386,
+          "exp": 5834,
+          "titolo": "🌙 Astrale"
+        }
+      ]
+    },
+    {
+      "mese_key": 202603,
+      "label": "Marzo 2026",
+      "anno": 2026,
+      "mese": 3,
+      "giocatori": [
+        {
+          "pos": 1,
+          "nick": "astenic4_aspis",
+          "pts": 1986,
+          "exp": 0,
+          "titolo": "🌟 Campione"
+        },
+        {
+          "pos": 2,
+          "nick": "zanshine",
+          "pts": 1973,
+          "exp": 0,
+          "titolo": "🌟 Campione"
+        },
+        {
+          "pos": 3,
+          "nick": "icarus",
+          "pts": 1864,
+          "exp": 0,
+          "titolo": "🌟 Campione"
+        }
+      ]
+    }
+  ],
+  "statistiche": {
+    "giocatori": 85,
+    "tiri_totali": 15729,
+    "punti_totali": 211294,
+    "sfide_totali": 392,
+    "oggetti_giro": 566
+  }
+}
