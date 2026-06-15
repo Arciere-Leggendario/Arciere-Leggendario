@@ -1,6 +1,6 @@
 {
-  "aggiornato": "15/06/2026 14:45:01",
-  "ts": 1781527501,
+  "aggiornato": "15/06/2026 14:50:01",
+  "ts": 1781527801,
   "classifica_live": [
     {
       "pos": 1,
@@ -29,14 +29,14 @@
     {
       "pos": 3,
       "nick": "delirio",
-      "pts": 27909,
-      "exp": 13750,
+      "pts": 27911,
+      "exp": 13751,
       "titolo": "👑 Cupido Immortale",
-      "tiri": 2141,
+      "tiri": 2142,
       "wins": 49,
       "losses": 56,
       "streak": 8,
-      "coins": 1447
+      "coins": 1457
     },
     {
       "pos": 4,
@@ -53,14 +53,14 @@
     {
       "pos": 5,
       "nick": "cappellaio_gatto",
-      "pts": 21655,
-      "exp": 15310,
+      "pts": 21710,
+      "exp": 15340,
       "titolo": "👑 Cupido Immortale",
-      "tiri": 1609,
+      "tiri": 1610,
       "wins": 44,
       "losses": 24,
       "streak": 35,
-      "coins": 145
+      "coins": 115
     },
     {
       "pos": 6,
@@ -107,13 +107,13 @@
       {
         "pos": 1,
         "nick": "cappellaio_gatto",
-        "pts": 1945,
+        "pts": 2000,
         "titolo": "👑 Cupido Immortale"
       },
       {
         "pos": 2,
         "nick": "delirio",
-        "pts": 302,
+        "pts": 304,
         "titolo": "👑 Cupido Immortale"
       },
       {
@@ -143,7 +143,7 @@
       {
         "pos": 7,
         "nick": "polveredistelle",
-        "pts": 8,
+        "pts": 25,
         "titolo": "👁️ Ombra"
       }
     ]
@@ -239,9 +239,9 @@
   ],
   "statistiche": {
     "giocatori": 85,
-    "tiri_totali": 15737,
-    "punti_totali": 211398,
+    "tiri_totali": 15740,
+    "punti_totali": 211472,
     "sfide_totali": 392,
-    "oggetti_giro": 569
+    "oggetti_giro": 570
   }
 }
