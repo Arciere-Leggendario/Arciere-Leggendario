@@ -1,6 +1,6 @@
 {
-  "aggiornato": "15/06/2026 14:10:57",
-  "ts": 1781525457,
+  "aggiornato": "15/06/2026 14:30:01",
+  "ts": 1781526601,
   "classifica_live": [
     {
       "pos": 1,
@@ -53,26 +53,26 @@
     {
       "pos": 5,
       "nick": "cappellaio_gatto",
-      "pts": 21635,
-      "exp": 15303,
+      "pts": 21652,
+      "exp": 15309,
       "titolo": "👑 Cupido Immortale",
-      "tiri": 1606,
+      "tiri": 1608,
       "wins": 44,
       "losses": 24,
       "streak": 35,
-      "coins": 103
+      "coins": 135
     },
     {
       "pos": 6,
       "nick": "maremmano",
-      "pts": 19566,
-      "exp": 9367,
+      "pts": 19601,
+      "exp": 9382,
       "titolo": "🌌 Galattico",
-      "tiri": 1674,
+      "tiri": 1675,
       "wins": 0,
       "losses": 2,
       "streak": 46,
-      "coins": 2975
+      "coins": 2985
     },
     {
       "pos": 7,
@@ -107,7 +107,7 @@
       {
         "pos": 1,
         "nick": "cappellaio_gatto",
-        "pts": 1925,
+        "pts": 1942,
         "titolo": "👑 Cupido Immortale"
       },
       {
@@ -118,20 +118,20 @@
       },
       {
         "pos": 3,
+        "nick": "rossella0402",
+        "pts": 128,
+        "titolo": "⚡ Mito"
+      },
+      {
+        "pos": 4,
         "nick": "icarus",
         "pts": 115,
         "titolo": "👑 Cupido Immortale"
       },
       {
-        "pos": 4,
-        "nick": "rossella0402",
-        "pts": 103,
-        "titolo": "⚡ Mito"
-      },
-      {
         "pos": 5,
         "nick": "maremmano",
-        "pts": 53,
+        "pts": 88,
         "titolo": "🌌 Galattico"
       },
       {
@@ -143,7 +143,7 @@
       {
         "pos": 7,
         "nick": "polveredistelle",
-        "pts": 6,
+        "pts": 8,
         "titolo": "👁️ Ombra"
       }
     ]
@@ -239,9 +239,9 @@
   ],
   "statistiche": {
     "giocatori": 85,
-    "tiri_totali": 15729,
-    "punti_totali": 211294,
+    "tiri_totali": 15734,
+    "punti_totali": 211373,
     "sfide_totali": 392,
-    "oggetti_giro": 566
+    "oggetti_giro": 570
   }
 }
