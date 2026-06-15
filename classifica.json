@@ -1,6 +1,6 @@
 {
-  "aggiornato": "15/06/2026 14:30:01",
-  "ts": 1781526601,
+  "aggiornato": "15/06/2026 14:35:01",
+  "ts": 1781526901,
   "classifica_live": [
     {
       "pos": 1,
@@ -29,14 +29,14 @@
     {
       "pos": 3,
       "nick": "delirio",
-      "pts": 27907,
-      "exp": 13749,
+      "pts": 27909,
+      "exp": 13750,
       "titolo": "👑 Cupido Immortale",
-      "tiri": 2140,
+      "tiri": 2141,
       "wins": 49,
       "losses": 56,
       "streak": 8,
-      "coins": 1437
+      "coins": 1447
     },
     {
       "pos": 4,
@@ -65,14 +65,14 @@
     {
       "pos": 6,
       "nick": "maremmano",
-      "pts": 19601,
-      "exp": 9382,
+      "pts": 19621,
+      "exp": 9394,
       "titolo": "🌌 Galattico",
-      "tiri": 1675,
+      "tiri": 1676,
       "wins": 0,
       "losses": 2,
       "streak": 46,
-      "coins": 2985
+      "coins": 2955
     },
     {
       "pos": 7,
@@ -113,7 +113,7 @@
       {
         "pos": 2,
         "nick": "delirio",
-        "pts": 300,
+        "pts": 302,
         "titolo": "👑 Cupido Immortale"
       },
       {
@@ -131,7 +131,7 @@
       {
         "pos": 5,
         "nick": "maremmano",
-        "pts": 88,
+        "pts": 108,
         "titolo": "🌌 Galattico"
       },
       {
@@ -239,9 +239,9 @@
   ],
   "statistiche": {
     "giocatori": 85,
-    "tiri_totali": 15734,
-    "punti_totali": 211373,
+    "tiri_totali": 15736,
+    "punti_totali": 211395,
     "sfide_totali": 392,
-    "oggetti_giro": 570
+    "oggetti_giro": 569
   }
 }
