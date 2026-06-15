@@ -1,6 +1,6 @@
 {
-  "aggiornato": "15/06/2026 14:50:01",
-  "ts": 1781527801,
+  "aggiornato": "15/06/2026 14:55:01",
+  "ts": 1781528101,
   "classifica_live": [
     {
       "pos": 1,
@@ -65,14 +65,14 @@
     {
       "pos": 6,
       "nick": "orsettopappatoredimieleconleapi",
-      "pts": 19621,
-      "exp": 9394,
+      "pts": 19633,
+      "exp": 9403,
       "titolo": "🌌 Galattico",
-      "tiri": 1676,
+      "tiri": 1677,
       "wins": 0,
       "losses": 2,
       "streak": 46,
-      "coins": 2955
+      "coins": 2925
     },
     {
       "pos": 7,
@@ -145,6 +145,12 @@
         "nick": "polveredistelle",
         "pts": 25,
         "titolo": "👁️ Ombra"
+      },
+      {
+        "pos": 8,
+        "nick": "orsettopappatoredimieleconleapi",
+        "pts": 12,
+        "titolo": "🌌 Galattico"
       }
     ]
   },
@@ -239,9 +245,9 @@
   ],
   "statistiche": {
     "giocatori": 85,
-    "tiri_totali": 15740,
-    "punti_totali": 211472,
+    "tiri_totali": 15741,
+    "punti_totali": 211484,
     "sfide_totali": 392,
-    "oggetti_giro": 570
+    "oggetti_giro": 571
   }
 }
