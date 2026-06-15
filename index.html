@@ -252,7 +252,6 @@
   .rarity-epico { color: var(--gold); border: 1px solid var(--gold-dark); }
   .rarity-leggendario { color: var(--crimson-light); border: 1px solid var(--crimson); }
 
-  /* Coin badge */
   .coin-badge {
     display: inline-flex; align-items: center; gap: 0.3rem;
     font-family: 'Cinzel', serif; font-size: 0.75rem;
@@ -260,7 +259,6 @@
     border: 1px solid rgba(245,200,66,0.3); padding: 0.15rem 0.5rem;
   }
 
-  /* Market section */
   .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
   .market-card { background: var(--bg-card); border: 1px solid rgba(42,80,150,0.3); padding: 1.2rem; text-align: center; transition: all 0.3s; position: relative; }
   .market-card:hover { border-color: rgba(245,200,66,0.4); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
@@ -327,7 +325,6 @@
   .lb-prize { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--crimson-light); text-align: right; white-space: nowrap; padding: 0.2rem 0.5rem; border: 1px solid rgba(139,26,26,0.4); background: rgba(139,26,26,0.1); }
   .lb-empty { text-align: center; color: var(--text-dim); font-style: italic; padding: 3rem; border: 1px dashed rgba(201,168,76,0.2); }
 
-  /* Prize banner */
   .prize-banner {
     display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
     margin-bottom: 1.5rem; padding: 1rem;
@@ -360,7 +357,6 @@
   .server-label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem; }
   .server-value { font-family: 'Cinzel Decorative', cursive; font-size: 1.3rem; color: var(--gold-light); margin-bottom: 1.5rem; text-shadow: 0 0 15px var(--glow); }
 
-  /* ── CONTATTI ── */
   .contact-section { background: linear-gradient(180deg, transparent, rgba(139,26,26,0.04), transparent); }
   .contact-box {
     max-width: 700px; margin: 0 auto;
@@ -1180,12 +1176,13 @@ for (let i = 0; i < 30; i++) {
   container.appendChild(p);
 }
 
-// ── CLASSIFICA DATA ──
+// ── CLASSIFICA LIVE ──
+const JSON_URL = "https://raw.githubusercontent.com/Arciere-Leggendario/Arciere-Leggendario/main/classifica.json";
 const PREMI = [500, 300, 150];
 
-const classifiche = {
-  "Gennaio 2026":   { top8: true,  giocatori: [] },
-  "Febbraio 2026":  { top8: true,  giocatori: [
+const classificheStatiche = {
+  "Gennaio 2026":  { top8: true,  giocatori: [] },
+  "Febbraio 2026": { top8: true,  giocatori: [
     { nick: "astenic4_aspis", pts: 1986, titolo: "🌟 Campione", streak: 5 },
     { nick: "Zanshine",       pts: 1973, titolo: "🌟 Campione", streak: 3 },
     { nick: "Icarus",         pts: 1753, titolo: "🌟 Campione", streak: 0 },
@@ -1195,7 +1192,7 @@ const classifiche = {
     { nick: "Asia",           pts: 989,  titolo: "⚔️ Guerriero", streak: 0 },
     { nick: "Stregone^",      pts: 518,  titolo: "🎯 Tiratore",  streak: 0 },
   ]},
-  "Marzo 2026":     { top8: true,  giocatori: [
+  "Marzo 2026":    { top8: true,  giocatori: [
     { nick: "Zanshine",       pts: 6177, titolo: "💀 Predatore" },
     { nick: "Icarus",         pts: 5921, titolo: "💀 Predatore" },
     { nick: "Patty",          pts: 5457, titolo: "⚡ Mito"      },
@@ -1205,90 +1202,145 @@ const classifiche = {
     { nick: "micio_di_casa",  pts: 1572, titolo: "🌟 Campione"  },
     { nick: "Chiara26_",      pts: 1352, titolo: "🛡️ Veterano"  },
   ]},
-  "Aprile 2026":    { top8: false, giocatori: [
+  "Aprile 2026":   { top8: false, giocatori: [
     { nick: "Icarus",   pts: 13096, titolo: "☄️ Cosmico" },
     { nick: "Zanshine", pts: 11651, titolo: "🌙 Astrale"  },
     { nick: "Delirio",  pts: 11386, titolo: "🌙 Astrale"  },
   ]},
-  "Maggio 2026":    { top8: false, giocatori: [
+  "Maggio 2026":   { top8: false, giocatori: [
     { nick: "Icarus",   pts: 25071, titolo: "👑 Cupido Immortale" },
     { nick: "Delirio",  pts: 23300, titolo: "👑 Cupido Immortale" },
     { nick: "Zanshine", pts: 20822, titolo: "🌌 Galattico"        },
   ]},
-  "Giugno 2026":    { top8: false, giocatori: [] },
-  "Luglio 2026":    { top8: false, giocatori: [] },
-  "Agosto 2026":    { top8: false, giocatori: [] },
-  "Settembre 2026": { top8: false, giocatori: [] },
-  "Ottobre 2026":   { top8: false, giocatori: [] },
-  "Novembre 2026":  { top8: false, giocatori: [] },
-  "Dicembre 2026":  { top8: false, giocatori: [] },
 };
 
-// ── RENDER CLASSIFICA ──
-const tabsEl = document.getElementById('monthTabs');
-const lbEl = document.getElementById('leaderboards');
-const mesi = Object.keys(classifiche);
-const defaultTab = "Maggio 2026";
-
-mesi.forEach((mese, idx) => {
-  const tab = document.createElement('button');
-  tab.className = 'month-tab' + (mese === defaultTab ? ' active' : '');
-  tab.textContent = mese;
-  tab.onclick = () => {
-    document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.leaderboard').forEach(l => l.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('lb-' + idx).classList.add('active');
-  };
-  tabsEl.appendChild(tab);
-
-  const lb = document.createElement('div');
-  lb.className = 'leaderboard' + (mese === defaultTab ? ' active' : '');
-  lb.id = 'lb-' + idx;
-
-  const { top8, giocatori } = classifiche[mese];
+function buildLeaderboard(top8, giocatori, isLive, aggiornato, stats) {
   const limit = top8 ? 8 : 3;
   const players = giocatori.slice(0, limit);
-
   const emptyHtml = '<div class="lb-empty">📋 Classifica non ancora disponibile per questo mese.<br><em>Torna a fine mese!</em></div>';
-
   const titleHtml = top8
     ? '<div class="lb-title">🏆 Top 8 Arcieri</div>'
     : '<div class="lb-title">🏆 Top 3 Arcieri — Podio Mensile</div>';
-
   const prizeBannerHtml = !top8
     ? `<div class="prize-banner">
         <div class="prize-item"><div class="prize-medal">🥇</div><div class="prize-pts">+500 pts</div><div class="prize-label">1° Posto</div></div>
         <div class="prize-item"><div class="prize-medal">🥈</div><div class="prize-pts">+300 pts</div><div class="prize-label">2° Posto</div></div>
         <div class="prize-item"><div class="prize-medal">🥉</div><div class="prize-pts">+150 pts</div><div class="prize-label">3° Posto</div></div>
-      </div>`
-    : '';
+      </div>` : '';
+  let liveHeaderHtml = '';
+  if (isLive && aggiornato) {
+    const st = stats || {};
+    liveHeaderHtml = `<div style="display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:center;
+      margin-bottom:1.2rem;padding:0.6rem 1rem;
+      background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);">
+      <span style="font-family:'Cinzel',serif;font-size:0.75rem;color:var(--gold)">🟢 LIVE · aggiornato ${aggiornato}</span>
+      ${st.giocatori ? `<span style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--text-dim)">👥 ${st.giocatori} giocatori</span>` : ''}
+      ${st.tiri_totali ? `<span style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--text-dim)">🏹 ${Number(st.tiri_totali).toLocaleString('it-IT')} tiri</span>` : ''}
+      ${st.sfide_totali ? `<span style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--text-dim)">⚔️ ${st.sfide_totali} sfide</span>` : ''}
+    </div>`;
+  }
+  const rowsHtml = players.length === 0 ? emptyHtml : players.map((g, i) => {
+    const posClass = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🏹';
+    const streakBadge = (g.streak && g.streak >= 3) ? ' 🔥' + g.streak + 'gg' : '';
+    const prizeHtml = (!top8 && i < 3) ? `<div class="lb-prize">+${PREMI[i].toLocaleString('it-IT')} pts</div>` : '';
+    return `<div class="lb-row ${posClass}">
+      <div class="lb-pos">${medal}</div>
+      <div class="lb-info">
+        <div class="lb-nick">${g.nick}${streakBadge}</div>
+        <div class="lb-title-text">${g.titolo}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem">
+        <div class="lb-pts">${Number(g.pts).toLocaleString('it-IT')}<span>punti</span></div>
+        ${prizeHtml}
+      </div>
+    </div>`;
+  }).join('');
+  return liveHeaderHtml + titleHtml + prizeBannerHtml + rowsHtml;
+}
 
-  const rowsHtml = players.length === 0
-    ? emptyHtml
-    : players.map((g, i) => {
-        const posClass = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
-        const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🏹';
-        const streakBadge = (g.streak && g.streak >= 3) ? ' 🔥' + g.streak + 'gg' : '';
-        const prizeHtml = (!top8 && i < 3)
-          ? `<div class="lb-prize">+${PREMI[i].toLocaleString('it-IT')} pts</div>`
-          : '';
-        return `<div class="lb-row ${posClass}">
-          <div class="lb-pos">${medal}</div>
-          <div class="lb-info">
-            <div class="lb-nick">${g.nick}${streakBadge}</div>
-            <div class="lb-title-text">${g.titolo}</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem">
-            <div class="lb-pts">${g.pts.toLocaleString('it-IT')}<span>punti</span></div>
-            ${prizeHtml}
-          </div>
-        </div>`;
-      }).join('');
+function renderClassifica(liveData) {
+  const tabsEl = document.getElementById('monthTabs');
+  const lbEl   = document.getElementById('leaderboards');
+  tabsEl.innerHTML = '';
+  lbEl.innerHTML   = '';
 
-  lb.innerHTML = titleHtml + prizeBannerHtml + rowsHtml;
-  lbEl.appendChild(lb);
-});
+  const MESI_NOMI = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno",
+                     "Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+  const annoCorrente = new Date().getFullYear();
+  const meseCorrente = new Date().getMonth();
+
+  // Mappa completa: statici + mesi anno corrente
+  const allMesi = {};
+  for (const [k, v] of Object.entries(classificheStatiche)) {
+    allMesi[k] = { ...v };
+  }
+  for (let m = 0; m < 12; m++) {
+    const label = MESI_NOMI[m] + " " + annoCorrente;
+    if (!allMesi[label]) allMesi[label] = { top8: false, giocatori: [] };
+  }
+
+  // Inietta dati live nel mese corrente
+  let liveMeseLabel = null;
+  if (liveData && liveData.classifica_live && liveData.classifica_live.length > 0) {
+    liveMeseLabel = MESI_NOMI[meseCorrente] + " " + annoCorrente;
+    allMesi[liveMeseLabel] = {
+      top8: false,
+      giocatori: liveData.classifica_live.map(p => ({
+        nick: p.nick, pts: p.pts, titolo: p.titolo, streak: p.streak || 0,
+      })),
+      isLive: true,
+      aggiornato: liveData.aggiornato,
+      stats: liveData.statistiche,
+    };
+  }
+
+  const mesiKeys = Object.keys(allMesi);
+  const defaultTab = liveMeseLabel || "Maggio 2026";
+
+  mesiKeys.forEach((mese, idx) => {
+    const { top8, giocatori, isLive, aggiornato, stats } = allMesi[mese];
+    const parts = mese.split(' ');
+
+    const tab = document.createElement('button');
+    tab.className = 'month-tab' + (mese === defaultTab ? ' active' : '');
+    tab.textContent = parts[0];
+    tab.title = mese;
+    tab.onclick = () => {
+      document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.leaderboard').forEach(l => l.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('lb-' + idx).classList.add('active');
+    };
+    tabsEl.appendChild(tab);
+
+    const lb = document.createElement('div');
+    lb.className = 'leaderboard' + (mese === defaultTab ? ' active' : '');
+    lb.id = 'lb-' + idx;
+    lb.innerHTML = buildLeaderboard(top8, giocatori, isLive, aggiornato, stats);
+    lbEl.appendChild(lb);
+  });
+
+  // Riattiva animate on scroll
+  document.querySelectorAll('.lb-row').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+}
+
+async function caricaClassifica() {
+  let liveData = null;
+  try {
+    const resp = await fetch(JSON_URL + '?t=' + Date.now());
+    if (resp.ok) liveData = await resp.json();
+  } catch(e) { /* fallback offline: mostra solo dati statici */ }
+  renderClassifica(liveData);
+}
+
+caricaClassifica();
+setInterval(caricaClassifica, 5 * 60 * 1000);
 
 // ── CONTACT FORM ──
 const contactForm = document.getElementById('contactForm');
@@ -1340,7 +1392,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.cmd-card, .item-card, .market-card, .title-row, .rule-item, .lb-row').forEach(el => {
+document.querySelectorAll('.cmd-card, .item-card, .market-card, .title-row, .rule-item').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
